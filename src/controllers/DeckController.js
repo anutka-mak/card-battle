@@ -8,9 +8,9 @@ class DeckController {
     initializeDeck() {
         const suits = [
             { name: 'Hearts', imageUrl: "assets/images/hearts.png" },
-            { name: 'Diamonds', imageUrl: "/assets/images/diamonds.png" },
-            { name: 'Clubs', imageUrl: "/assets/images/clubs.png" },
-            { name: 'Spades', imageUrl: "/assets/images/spades.png" }
+            { name: 'Diamonds', imageUrl: "assets/images/diamonds.png" },
+            { name: 'Clubs', imageUrl: "assets/images/clubs.png" },
+            { name: 'Spades', imageUrl: "assets/images/spades.png" }
         ];
 
         const ranks = [
