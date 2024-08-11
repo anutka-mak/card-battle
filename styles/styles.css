@@ -1,0 +1,101 @@
+:root {
+    --bg-color: rgb(255, 255, 255);
+    --border-color: rgba(0, 0, 0, 0.8);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --highlight-border: rgb(255, 215, 0);
+    --highlight-bg: rgba(250, 250, 218, 0.47);
+    --text-color: rgb(0, 0, 0);
+    --deck-bg: rgba(250, 235, 215, 1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 1.5%;
+}
+
+.deck-count {
+    padding: 12px;
+    width: 210px;
+
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+
+    background-color: var(--deck-bg);
+    border-radius: 7px;
+}
+
+.card-board {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100px;
+    height: 140px;
+
+    color: var(--text-color);
+
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+
+    box-shadow: var(--shadow-color) 0 4px 12px;
+    transition: transform 0.25s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.card__label{
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.image {
+    width: 18px;
+    height: 18px;
+}
+
+.card__image_top-left, .card__image_bottom-right {
+    position: absolute;
+}
+
+.card__image_top-left {
+    top: 8px;
+    right: 10px;
+}
+
+.card__image_bottom-right {
+    bottom: 8px;
+    left: 10px;
+    transform: rotate(180deg);
+}
+
+.card__image_size-m {
+    width: 50px;
+    height: 50px;
+}
+
+.card.selected {
+    background-color: var(--highlight-bg);
+    border: 2px solid var(--highlight-border);
+    box-shadow: rgba(0, 0, 0, 0.2) 0 8px 16px;
+    transform: scale(1.03);
+}
