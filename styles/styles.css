@@ -73,16 +73,16 @@
     height: 18px;
 }
 
-.card__image_top-left, .card__image_bottom-right {
+.card__image_top-right, .card__image_bottom-left {
     position: absolute;
 }
 
-.card__image_top-left {
+.card__image_top-right {
     top: 8px;
     right: 10px;
 }
 
-.card__image_bottom-right {
+.card__image_bottom-left {
     bottom: 8px;
     left: 10px;
     transform: rotate(180deg);

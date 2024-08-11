@@ -28,9 +28,9 @@ class CardView {
         };
 
         cardElement.appendChild(rankLabel);
-        cardElement.appendChild(createSuitImage('image card__image_top-left'));
+        cardElement.appendChild(createSuitImage('image card__image_top-right'));
         cardElement.appendChild(createSuitImage('image card__image_size-m'));
-        cardElement.appendChild(createSuitImage('image card__image_bottom-right'));
+        cardElement.appendChild(createSuitImage('image card__image_bottom-left'));
 
         this.element = cardElement;
 
