@@ -1,26 +1,22 @@
-import CardController from "./controllers/card-controller.js";
-import CardView from "./views/card-view.js";
 import DeckController from "./controllers/deck-controller.js";
-import DeckView from "./views/deck-view.js";
+import CardController from "./controllers/card-controller.js";
 
-const deckController = new DeckController();
-const deckView = new DeckView(deckController);
+DeckController.initializeDeck();
+DeckController.shuffle();
+DeckController.renderCardCount();
 
-deckController.initializeDeck();
-deckController.shuffle();
-deckView.render();
+const player1Cards = DeckController.drawCards(6);
+const player2Cards = DeckController.drawCards(6);
 
-const dealtCards = deckController.drawCards(6);
+const player1Element = document.querySelector('.player-1-cards');
+const player2Element = document.querySelector('.player-2-cards');
 
-dealtCards.forEach((cardModel, index) => {
-    const cardView = new CardView(cardModel);
-
-    cardView.render();
-
-    if (index > 0) {
-        const isWinningCard = new CardController(cardModel).canBeat(dealtCards[index - 1]);
-        console.log(`Card ${index + 1} can beat Card ${index}: ${isWinningCard}`);
-    }
+player1Cards.forEach((cardModel, index) => {
+    CardController.renderCard(cardModel, player1Element);
 });
 
-deckView.render();
+player2Cards.forEach((cardModel, index) => {
+    CardController.renderCard(cardModel, player2Element);
+});
+
+DeckController.renderCardCount();
