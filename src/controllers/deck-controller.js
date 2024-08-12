@@ -2,7 +2,7 @@ import CardController from "./card-controller.js";
 import DeckView from "../views/deck-view.js";
 
 class DeckController {
-    static deck = [];
+    static cards = [];
 
     static initializeDeck() {
         const suits = [
@@ -24,26 +24,29 @@ class DeckController {
             { name: 'Ace', value: 14 }
         ];
 
-        DeckController.deck = [];
+        this.cards = [];
 
         suits.forEach(suit => {
             ranks.forEach(rank => {
                 const card = CardController.createCard(suit, rank);
-                DeckController.deck.push(card);
+                this.cards.push(card);
             });
         });
     }
 
     static shuffle() {
-        DeckController.deck.sort(() => Math.random() - 0.5);
+        this.cards.sort(() => Math.random() - 0.5);
     }
 
     static drawCards(number) {
-        return DeckController.deck.splice(0, number);
+        const dealCards = this.cards.splice(0, number);
+        this.renderCardCount();
+
+        return dealCards;
     }
 
     static getCardsCount() {
-        return DeckController.deck.length;
+        return this.cards.length;
     }
 
     static renderCardCount() {

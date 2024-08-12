@@ -1,7 +1,7 @@
 class DeckView {
     static render(cardCount) {
         const deckElement = document.querySelector('.deck-count');
-        deckElement.innerHTML = `Amount card in deck: ${cardCount}`;
+        deckElement.textContent = `Amount card in deck: ${cardCount}`;
     }
 }
 

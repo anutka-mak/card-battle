@@ -6,9 +6,10 @@ class CardController {
         return new CardModel(suit, rank);
     }
 
-    static canBeat(cardModel, targetCardModel) {
-        const thisCardSuit = cardModel.getSuit().name;
-        const thisCardRank = cardModel.getRank().value;
+    // card винести порівняння
+    static canBeat(card, targetCardModel) {
+        const thisCardSuit = card.getSuit().name;
+        const thisCardRank = card.getRank().value;
 
         const otherCardSuit = targetCardModel.getSuit().name;
         const otherCardRank = targetCardModel.getRank().value;
@@ -20,8 +21,8 @@ class CardController {
         }
     }
 
-    static renderCard(cardModel, container) {
-        CardView.render(cardModel, container);
+    static renderCard(card, container) {
+        CardView.render(card, container);
     }
 }
 

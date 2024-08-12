@@ -2,8 +2,7 @@ import DeckController from "./controllers/deck-controller.js";
 import CardController from "./controllers/card-controller.js";
 
 DeckController.initializeDeck();
-DeckController.shuffle();
-DeckController.renderCardCount();
+DeckController.shuffle(); //варіант вкласти в ініціалізацію
 
 const player1Cards = DeckController.drawCards(6);
 const player2Cards = DeckController.drawCards(6);
@@ -18,5 +17,3 @@ player1Cards.forEach((cardModel, index) => {
 player2Cards.forEach((cardModel, index) => {
     CardController.renderCard(cardModel, player2Element);
 });
-
-DeckController.renderCardCount();

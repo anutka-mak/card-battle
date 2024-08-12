@@ -8,16 +8,8 @@ class CardModel {
         return this.suit;
     }
 
-    setSuit(suit) {
-        this.suit = suit;
-    }
-
     getRank() {
         return this.rank;
-    }
-
-    setRank(rank) {
-        this.rank = rank;
     }
 }
 
