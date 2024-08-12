@@ -1,11 +1,10 @@
-import CardModel from "../models/card-model.js";
+import CardController from "./card-controller.js";
+import DeckView from "../views/deck-view.js";
 
 class DeckController {
-    constructor() {
-        this.deck = [];
-    }
+    static deck = [];
 
-    initializeDeck() {
+    static initializeDeck() {
         const suits = [
             { name: 'Hearts', imageUrl: "assets/images/hearts.png" },
             { name: 'Diamonds', imageUrl: "assets/images/diamonds.png" },
@@ -25,26 +24,31 @@ class DeckController {
             { name: 'Ace', value: 14 }
         ];
 
-        this.deck = [];
+        DeckController.deck = [];
 
         suits.forEach(suit => {
             ranks.forEach(rank => {
-                const card = new CardModel(suit, rank);
-                this.deck.push(card);
+                const card = CardController.createCard(suit, rank);
+                DeckController.deck.push(card);
             });
         });
     }
 
-    shuffle() {
-        this.deck.sort(() => Math.random() - 0.5);
+    static shuffle() {
+        DeckController.deck.sort(() => Math.random() - 0.5);
     }
 
-    drawCards(number) {
-        return this.deck.splice(0, number);
+    static drawCards(number) {
+        return DeckController.deck.splice(0, number);
     }
 
-    getCardsCount() {
-        return this.deck.length;
+    static getCardsCount() {
+        return DeckController.deck.length;
+    }
+
+    static renderCardCount() {
+        const cardCount = DeckController.getCardsCount();
+        DeckView.render(cardCount);
     }
 }
 
