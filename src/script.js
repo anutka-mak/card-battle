@@ -1,7 +1,7 @@
-import CardController from "./controllers/CardController.js";
-import CardView from "./views/CardView.js";
-import DeckController from "./controllers/DeckController.js";
-import DeckView from "./views/DeckView.js";
+import CardController from "./controllers/card-controller.js";
+import CardView from "./views/card-view.js";
+import DeckController from "./controllers/deck-controller.js";
+import DeckView from "./views/deck-view.js";
 
 const deckController = new DeckController();
 const deckView = new DeckView(deckController);

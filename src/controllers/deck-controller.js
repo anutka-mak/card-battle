@@ -1,4 +1,4 @@
-import CardModel from "../models/CardModel.js";
+import CardModel from "../models/card-model.js";
 
 class DeckController {
     constructor() {
