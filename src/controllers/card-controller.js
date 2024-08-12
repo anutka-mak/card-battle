@@ -1,14 +1,17 @@
+import CardModel from "../models/card-model.js";
+import CardView from "../views/card-view.js";
+
 class CardController {
-    constructor(model) {
-        this.model = model;
+    static createCard(suit, rank) {
+        return new CardModel(suit, rank);
     }
 
-    canBeat(card) {
-        const thisCardSuit = this.model.getSuit().name;
-        const thisCardRank = this.model.getRank().value;
+    static canBeat(cardModel, targetCardModel) {
+        const thisCardSuit = cardModel.getSuit().name;
+        const thisCardRank = cardModel.getRank().value;
 
-        const otherCardSuit = card.getSuit().name;
-        const otherCardRank = card.getRank().value;
+        const otherCardSuit = targetCardModel.getSuit().name;
+        const otherCardRank = targetCardModel.getRank().value;
 
         if (thisCardSuit === otherCardSuit) {
             return thisCardRank > otherCardRank;
@@ -16,6 +19,10 @@ class CardController {
             return false;
         }
     }
+
+    static renderCard(cardModel, container) {
+        CardView.render(cardModel, container);
+    }
 }
 
-export default  CardController;
+export default CardController;
