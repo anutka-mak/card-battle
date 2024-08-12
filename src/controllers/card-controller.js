@@ -6,19 +6,16 @@ class CardController {
         return new CardModel(suit, rank);
     }
 
-    // card винести порівняння
-    static canBeat(card, targetCardModel) {
-        const thisCardSuit = card.getSuit().name;
-        const thisCardRank = card.getRank().value;
+    static canBeat(tossupCard, fightCard) {
+        const tossupSuit = tossupCard.getSuit().name;
+        const tossupValue = tossupCard.getRank().value;
 
-        const otherCardSuit = targetCardModel.getSuit().name;
-        const otherCardRank = targetCardModel.getRank().value;
+        const fightSuit = fightCard.getSuit().name;
+        const fightValue = fightCard.getRank().value;
 
-        if (thisCardSuit === otherCardSuit) {
-            return thisCardRank > otherCardRank;
-        } else {
-            return false;
-        }
+        const isSameSuit = tossupSuit === fightSuit;
+
+        return isSameSuit ? tossupValue > fightValue : false;
     }
 
     static renderCard(card, container) {

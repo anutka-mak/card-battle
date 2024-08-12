@@ -16,18 +16,22 @@ class CardView {
             suitImage.src = `${suit.imageUrl}`;
             suitImage.alt = `${suit.name.toLowerCase()} icon`
 
-            classNames.split(' ').forEach(className => suitImage.classList.add(className)); //спростити
+            const classList = classNames.split(' ');
+
+            classList.forEach(className => {
+                suitImage.classList.add(className);
+            });
 
             return suitImage;
         };
 
         const suitImageTopRight = createSuitImage('image card__image_top-right');
         const suitImageBottomLeft = createSuitImage('image card__image_bottom-left');
-        const suitImage = createSuitImage('image card__image_size-m');
+        const suitImageCenter = createSuitImage('image card__image_size-m');
 
         cardElement.appendChild(rankLabel);
         cardElement.appendChild(suitImageTopRight);
-        cardElement.appendChild(suitImage);
+        cardElement.appendChild(suitImageCenter);
         cardElement.appendChild(suitImageBottomLeft);
 
         cardElement.addEventListener('click', () => {
