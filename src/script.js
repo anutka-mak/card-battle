@@ -10,10 +10,10 @@ const player2Cards = DeckController.drawCards(6);
 const player1Element = document.querySelector('.player-1-cards');
 const player2Element = document.querySelector('.player-2-cards');
 
-player1Cards.forEach((cardModel, index) => {
+player1Cards.forEach((cardModel) => {
     CardController.renderCard(cardModel, player1Element);
 });
 
-player2Cards.forEach((cardModel, index) => {
+player2Cards.forEach((cardModel) => {
     CardController.renderCard(cardModel, player2Element);
 });
