@@ -4,8 +4,8 @@ import PlayerController from "./controllers/player-controller.js";
 DeckController.initializeDeck();
 DeckController.shuffle(); //варіант вкласти в ініціалізацію
 
-const player1 = PlayerController.createPlayer('Player 1', 'fight');
-const player2 = PlayerController.createPlayer('Player 2', 'tossup');
+const player1 = PlayerController.createPlayer('Player 1', 'attacker');
+const player2 = PlayerController.createPlayer('Player 2', 'defender');
 
 const player1Cards = DeckController.drawCards(6);
 const player2Cards = DeckController.drawCards(6);
