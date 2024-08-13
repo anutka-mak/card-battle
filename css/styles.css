@@ -49,11 +49,12 @@
     width: 80%;
 }
 
-/*.card-board {
+.card-board {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 12px;
-}*/
+}
 
 .card {
     position: relative;
@@ -118,7 +119,7 @@
     transform: scale(1.03);
 }
 
-.player-1-cards, .player-2-cards {
+.player-cards, .player-1-cards, .player-2-cards {
     display: flex;
     flex-direction: row;
     gap: 7px;
