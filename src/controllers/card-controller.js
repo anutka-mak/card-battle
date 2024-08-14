@@ -1,5 +1,4 @@
 import CardModel from "../models/card-model.js";
-import CardView from "../views/card-view.js";
 
 class CardController {
     static count = 0;
@@ -18,10 +17,6 @@ class CardController {
         const isSameSuit = tossupSuit === fightSuit;
 
         return isSameSuit ? tossupValue > fightValue : false;
-    }
-
-    static renderCard(card, container) {
-        CardView.render(card, container);
     }
 }
 
