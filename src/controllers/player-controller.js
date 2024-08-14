@@ -13,7 +13,7 @@ class PlayerController {
         return player;
     }
 
-    static getPlayerByCardId(cardId) {
+    static findPlayerByCardId(cardId) {
         return this.players.find(player => player.getCardById(cardId));
     }
 
