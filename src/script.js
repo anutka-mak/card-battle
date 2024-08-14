@@ -17,5 +17,5 @@ PlayerController.takeCards(player2, player2Cards);
 PlayerController.renderPlayerCards(player1);
 PlayerController.renderPlayerCards(player2);
 
-FieldController.c(player1);
+FieldController.handleFieldClick(player1);
 FieldController.handleFieldClick(player2);

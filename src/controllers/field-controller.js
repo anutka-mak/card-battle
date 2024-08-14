@@ -6,9 +6,9 @@ class FieldController {
     static discardPile = [];
 
     static addCard(card) {
-        const isSameValueCard = !this.isSameValueOnField(card);
+        const isSameValueCard = this.isSameValueOnField(card);
 
-        if (isSameValueCard) {
+        if (!isSameValueCard) {
             this.fieldCards.push(card);
             FieldView.renderCard(card);
         }
