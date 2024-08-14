@@ -1,7 +1,7 @@
 import CardView from "./card-view.js";
 
 class PlayerView {
-    static renderPlayer(player) {
+    static renderPlayer(player, cardClickCallback) {
         const cardBoard = document.querySelector('.card-board');
         const playerName = player.getName();
         const playerClassName = playerName.replace(/\s+/g, '-');
@@ -11,6 +11,7 @@ class PlayerView {
 
         if (!playerContainer) {
             playerContainer = document.createElement('div');
+            playerContainer.classList.add('player__cards');
             playerContainer.id = playerContainerId;
             cardBoard.appendChild(playerContainer);
 
@@ -33,10 +34,10 @@ class PlayerView {
             playerContainer.appendChild(playerCardsEl);
         }
 
-        this.renderCards(player);
+        this.renderCards(player, cardClickCallback);
     }
 
-    static renderCards(player) {
+    static renderCards(player, cardClickCallback) {
         const playerName = player.getName();
         const playerClassName = playerName.replace(/\s+/g, '-');
 
@@ -47,10 +48,8 @@ class PlayerView {
             cardsContainer.textContent = '';
             const cards = player.getCards();
             cards.forEach(card => {
-                CardView.render(card, cardsContainer);
+                CardView.render(card, cardsContainer, cardClickCallback);
             });
-        } else {
-            console.error("Cards container for player not found.");
         }
     }
 

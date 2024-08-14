@@ -1,4 +1,5 @@
 import CardModel from "../models/card-model.js";
+import PlayerController from "./player-controller.js";
 
 class CardController {
     static createCard(suit, rank) {
@@ -15,6 +16,10 @@ class CardController {
         const isSameSuit = tossupSuit === fightSuit;
 
         return isSameSuit ? tossupValue > fightValue : false;
+    }
+
+    static handleCardClick(player, card) {
+        PlayerController.selectCard(player, card);
     }
 }
 

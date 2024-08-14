@@ -1,5 +1,5 @@
 class CardView {
-    static render(card, container) {
+    static render(card, container, clickCallback) {
         const rank = card.getRank();
         const suit = card.getSuit();
 
@@ -36,9 +36,9 @@ class CardView {
         cardElement.appendChild(suitImageCenter);
         cardElement.appendChild(suitImageBottomLeft);
 
-        cardElement.addEventListener('click', () => {
-            cardElement.classList.toggle('selected');
-        });
+        if (clickCallback) {
+            cardElement.addEventListener('click', () => clickCallback(card));
+        }
 
         container.appendChild(cardElement);
 

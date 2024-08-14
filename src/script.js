@@ -17,14 +17,5 @@ PlayerController.takeCards(player2, player2Cards);
 PlayerController.renderPlayerCards(player1);
 PlayerController.renderPlayerCards(player2);
 
-document.querySelectorAll('.card').forEach(cardElement => {
-    cardElement.addEventListener('click', () => {
-        const cardId = cardElement.id;
-        const player = PlayerController.getPlayerByCardId(cardId);
-        const card = player.getCardById(cardId);
-        PlayerController.selectCard(player, card);
-    });
-});
-
-FieldController.handleFieldClick(player1);
+FieldController.c(player1);
 FieldController.handleFieldClick(player2);

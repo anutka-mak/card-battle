@@ -1,6 +1,7 @@
-import PlayerView from "../views/player-view.js";
-import FieldController from "./field-controller.js";
 import PlayerModel from "../models/player-model.js";
+import PlayerView from "../views/player-view.js";
+import CardController from "./card-controller.js";
+import FieldController from "./field-controller.js";
 
 class PlayerController {
     static players = [];
@@ -8,6 +9,7 @@ class PlayerController {
     static createPlayer(name, mode) {
         const player = new PlayerModel(name, mode);
         this.players.push(player);
+
         return player;
     }
 
@@ -15,26 +17,9 @@ class PlayerController {
         return this.players.find(player => player.getCardById(cardId));
     }
 
-    static getPlayerByName(name) {
-        return this.players.find(player => player.getName() === name);
-    }
-
-    static getPlayerByMode(mode) {
-        return this.players.find(player => player.getMode() === mode);
-    }
-
-    static changePlayerMode(player, mode) {
-        player.setMode(mode);
-    }
-
     static addCardToPlayer(player, card) {
         player.addCard(card);
-        PlayerView.renderCards(player);
-    }
-
-    static removeCardFromPlayer(player, card) {
-        player.removeCard(card);
-        PlayerView.renderCards(player);
+        this.renderPlayerCards(player);
     }
 
     static takeCards(player, cards) {
@@ -46,19 +31,23 @@ class PlayerController {
         PlayerView.selectCard(card);
     }
 
-    static moveCardToField(player) {
-        const selectedCard = player.getSelectedCard();
-
-        if (selectedCard) {
-            FieldController.addCard(selectedCard);
-            this.removeCardFromPlayer(player, selectedCard);
-            player.clearSelectedCard();
-            PlayerView.renderCards(player);
+    static moveCardToField(player, card) {
+        if (card) {
+            FieldController.addCard(card);
+            this.removeCardFromPlayer(player, card.getId());
+            player.removeSelectedCard(card);
         }
     }
 
+    static removeCardFromPlayer(player, cardId) {
+        player.removeCard(cardId);
+        this.renderPlayerCards(player);
+    }
+
     static renderPlayerCards(player) {
-        PlayerView.renderPlayer(player);
+        PlayerView.renderPlayer(player, (card) => {
+            CardController.handleCardClick(player, card);
+        });
     }
 }
 

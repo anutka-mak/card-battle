@@ -6,6 +6,10 @@ class PlayerModel {
         this.selectedCard = null;
     }
 
+    addCard(card) {
+        this.cards.push(card);
+    }
+
     getName() {
         return this.name;
     }
@@ -22,10 +26,6 @@ class PlayerModel {
         return this.cards;
     }
 
-    addCard(card) {
-        this.cards.push(card);
-    }
-
     getSelectedCard() {
         return this.selectedCard;
     }
@@ -36,19 +36,12 @@ class PlayerModel {
         }
     }
 
-    clearSelectedCard() {
-        this.selectedCard = null;
-    }
-
-    removeCard(card) {
-        this.cards = this.cards.filter(c => c.id !== card.id);
-        if (this.selectedCard && this.selectedCard.id === card.id) {
-            this.clearSelectedCard();
-        }
-    }
-
     getCardById(cardId) {
         return this.cards.find(card => card.id === cardId);
+    }
+
+    removeCard(cardId) {
+        this.cards = this.cards.filter(card => card.id !== cardId);
     }
 }
 

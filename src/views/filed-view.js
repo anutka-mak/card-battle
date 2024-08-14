@@ -6,10 +6,10 @@ class FieldView {
         CardView.render(card, fieldElement);
     }
 
-    static onFieldClick(player, callback) {
+    static onFieldClick(callback) {
         const fieldElement = document.querySelector('.field');
 
-        fieldElement.addEventListener('click', () => { callback(player) });
+        fieldElement.addEventListener('click', callback);
     }
 
     static clearField() {
