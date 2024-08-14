@@ -8,9 +8,13 @@ class PlayerController {
 
     static createPlayer(name, mode) {
         const player = new PlayerModel(name, mode);
+        player.setMode(mode);
         this.players.push(player);
-
         return player;
+    }
+
+    static getPlayerMode(player) {
+        return player.getMode();
     }
 
     static findPlayerByCardId(cardId) {
@@ -32,9 +36,16 @@ class PlayerController {
     }
 
     static moveCardToField(player, card) {
-        FieldController.addCard(card);
-        this.removeCardFromPlayer(player, card.getId());
-        player.removeSelectedCard();
+        const mode = this.getPlayerMode(player);
+        const canAddCard = FieldController.canAddCard(card, mode);
+
+        if (canAddCard) {
+            FieldController.addCard(player, card);
+            this.removeCardFromPlayer(player, card.getId());
+            player.removeSelectedCard();
+        } else {
+            console.log("This card cannot be added to the field.");
+        }
     }
 
     static removeCardFromPlayer(player, cardId) {
