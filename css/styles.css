@@ -129,4 +129,8 @@
     transform: scale(1.03);
 }
 
+.field {
+    background-color: var(--deck-bg);
+    height: 800px;
+}
 

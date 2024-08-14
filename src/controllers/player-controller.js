@@ -1,5 +1,6 @@
-import PlayerModel from "../models/player-model.js";
 import PlayerView from "../views/player-view.js";
+import FieldController from "./field-controller.js";
+import PlayerModel from "../models/player-model.js";
 
 class PlayerController {
     static players = [];
@@ -8,10 +9,6 @@ class PlayerController {
         const player = new PlayerModel(name, mode);
         this.players.push(player);
         return player;
-    }
-
-    static addCardToPlayer(player, card) {
-        player.addCard(card);
     }
 
     static getPlayerByCardId(cardId) {
@@ -30,16 +27,38 @@ class PlayerController {
         player.setMode(mode);
     }
 
+    static addCardToPlayer(player, card) {
+        player.addCard(card);
+        PlayerView.renderCards(player);
+    }
+
     static removeCardFromPlayer(player, card) {
         player.removeCard(card);
+        PlayerView.renderCards(player);
+    }
+
+    static takeCards(player, cards) {
+        cards.forEach(card => this.addCardToPlayer(player, card));
+    }
+
+    static selectCard(player, card) {
+        player.selectCard(card);
+        PlayerView.selectCard(card);
+    }
+
+    static moveCardToField(player) {
+        const selectedCard = player.getSelectedCard();
+
+        if (selectedCard) {
+            FieldController.addCard(selectedCard);
+            this.removeCardFromPlayer(player, selectedCard);
+            player.clearSelectedCard();
+            PlayerView.renderCards(player);
+        }
     }
 
     static renderPlayerCards(player) {
         PlayerView.renderPlayer(player);
-    }
-
-    static takeCards(player, card) {
-        this.addCardToPlayer(player, card)
     }
 }
 

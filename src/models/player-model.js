@@ -6,28 +6,8 @@ class PlayerModel {
         this.selectedCard = null;
     }
 
-    addCard(card) {
-        this.cards.push(card);
-    }
-
-    removeCard(card) {
-        this.cards = this.cards.filter(c => c !== card);
-    }
-
-    getCards() {
-        return this.cards;
-    }
-
-    getCardById(id) {
-        return this.cards.find(card => card.id === id);
-    }
-
     getName() {
         return this.name;
-    }
-
-    setName(name) {
-        this.name = name;
     }
 
     getMode() {
@@ -38,12 +18,37 @@ class PlayerModel {
         this.mode = mode;
     }
 
-    setSelectedCard(card) {
-        this.selectedCard = card;
+    getCards() {
+        return this.cards;
+    }
+
+    addCard(card) {
+        this.cards.push(card);
     }
 
     getSelectedCard() {
         return this.selectedCard;
+    }
+
+    selectCard(card) {
+        if (this.selectedCard !== card) {
+            this.selectedCard = card;
+        }
+    }
+
+    clearSelectedCard() {
+        this.selectedCard = null;
+    }
+
+    removeCard(card) {
+        this.cards = this.cards.filter(c => c.id !== card.id);
+        if (this.selectedCard && this.selectedCard.id === card.id) {
+            this.clearSelectedCard();
+        }
+    }
+
+    getCardById(cardId) {
+        return this.cards.find(card => card.id === cardId);
     }
 }
 

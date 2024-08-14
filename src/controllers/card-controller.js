@@ -2,10 +2,12 @@ import CardModel from "../models/card-model.js";
 import CardView from "../views/card-view.js";
 
 class CardController {
-    static createCard(suit, rank) {
-        return new CardModel(suit, rank);
-    }
+    static count = 0;
 
+    static createCard(suit, rank) {
+        const id = `card-${++this.count}`;
+        return new CardModel(suit, rank, id);
+    }
     static canBeat(tossupCard, fightCard) {
         const tossupSuit = tossupCard.getSuit().name;
         const tossupValue = tossupCard.getRank().value;

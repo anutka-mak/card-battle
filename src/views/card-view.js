@@ -1,20 +1,21 @@
 class CardView {
-    static render(cardModel, container) {
+    static render(card, container) {
         const cardElement = document.createElement('div');
         cardElement.classList.add('card');
+        cardElement.id = card.getId();
 
         const rankLabel = document.createElement('div');
-        const rank = cardModel.getRank();
+        const rank = card.getRank();
 
         rankLabel.classList.add('card__label');
         rankLabel.textContent = `${rank.name}`;
 
         const createSuitImage = (classNames) => {
             const suitImage = document.createElement('img');
-            const suit = cardModel.getSuit();
+            const suit = card.getSuit();
 
             suitImage.src = `${suit.imageUrl}`;
-            suitImage.alt = `${suit.name.toLowerCase()} icon`
+            suitImage.alt = `${suit.name.toLowerCase()} icon`;
 
             const classList = classNames.split(' ');
 
@@ -39,6 +40,8 @@ class CardView {
         });
 
         container.appendChild(cardElement);
+
+        card.element = cardElement;
     }
 }
 
