@@ -27,16 +27,14 @@ class PlayerController {
     }
 
     static selectCard(player, card) {
-        player.selectCard(card);
+        player.setSelectedCard(card);
         PlayerView.selectCard(card);
     }
 
     static moveCardToField(player, card) {
-        if (card) {
-            FieldController.addCard(card);
-            this.removeCardFromPlayer(player, card.getId());
-            player.removeSelectedCard(card);
-        }
+        FieldController.addCard(card);
+        this.removeCardFromPlayer(player, card.getId());
+        player.removeSelectedCard();
     }
 
     static removeCardFromPlayer(player, cardId) {
@@ -45,7 +43,10 @@ class PlayerController {
     }
 
     static renderPlayerCards(player) {
-        PlayerView.renderPlayer(player, (card) => {
+        PlayerView.renderPlayer(player);
+
+        const playerCards = player.getCards();
+        playerCards.forEach(card => {
             CardController.handleCardClick(player, card);
         });
     }

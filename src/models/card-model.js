@@ -3,7 +3,7 @@ class CardModel {
         this.suit = suit;
         this.rank = rank;
         this.id = null;
-        this.clickCallback = null;
+        this.onCardClick = null;
     }
 
     getSuit() {
@@ -22,9 +22,13 @@ class CardModel {
         this.id = id;
     }
 
+    setHandleClick(callback) {
+        this.onCardClick = callback;
+    }
+
     getHandleClick() {
-        if (this.clickCallback) {
-            this.clickCallback(this.id);
+        if (this.onCardClick) {
+            this.onCardClick(this.id);
         }
     }
 }

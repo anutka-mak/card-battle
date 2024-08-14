@@ -1,7 +1,7 @@
 import CardView from "./card-view.js";
 
 class PlayerView {
-    static renderPlayer(player, cardClickCallback) {
+    static renderPlayer(player) {
         const cardBoard = document.querySelector('.card-board');
         const playerName = player.getName();
         const playerClassName = playerName.replace(/\s+/g, '-');
@@ -34,10 +34,10 @@ class PlayerView {
             playerContainer.appendChild(playerCardsEl);
         }
 
-        this.renderCards(player, cardClickCallback);
+        this.renderCards(player);
     }
 
-    static renderCards(player, cardClickCallback) {
+    static renderCards(player) {
         const playerName = player.getName();
         const playerClassName = playerName.replace(/\s+/g, '-');
 
@@ -48,7 +48,7 @@ class PlayerView {
             cardsContainer.textContent = '';
             const cards = player.getCards();
             cards.forEach(card => {
-                CardView.render(card, cardsContainer, cardClickCallback);
+                CardView.render(card, cardsContainer);
             });
         }
     }

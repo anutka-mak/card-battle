@@ -26,14 +26,12 @@ class PlayerModel {
         return this.cards;
     }
 
-    getSelectedCard() {
-        return this.selectedCard;
+    setSelectedCard(card) {
+        this.selectedCard = card;
     }
 
-    selectCard(card) {
-        if (this.selectedCard !== card) {
-            this.selectedCard = card;
-        }
+    getSelectedCard() {
+        return this.selectedCard;
     }
 
     getCardById(cardId) {
@@ -41,7 +39,7 @@ class PlayerModel {
     }
 
     removeCard(cardId) {
-        this.cards = this.cards.filter(card => card.id !== cardId);
+        this.cards = this.cards.filter(card => card.getId() !== cardId);
     }
 }
 

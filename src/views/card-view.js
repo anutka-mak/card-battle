@@ -1,5 +1,7 @@
+import PlayerView from "./player-view.js";
+
 class CardView {
-    static render(card, container, clickCallback) {
+    static render(card, container) {
         const rank = card.getRank();
         const suit = card.getSuit();
 
@@ -36,11 +38,13 @@ class CardView {
         cardElement.appendChild(suitImageCenter);
         cardElement.appendChild(suitImageBottomLeft);
 
-        if (clickCallback) {
-            cardElement.addEventListener('click', () => clickCallback(card));
-        }
-
         container.appendChild(cardElement);
+
+        cardElement.addEventListener('click', () => {
+            card.getHandleClick();
+            cardElement.classList.toggle('selected');
+            PlayerView.selectCard(card);
+        });
 
         card.element = cardElement;
     }

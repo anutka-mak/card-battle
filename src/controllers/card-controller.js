@@ -19,7 +19,9 @@ class CardController {
     }
 
     static handleCardClick(player, card) {
-        PlayerController.selectCard(player, card);
+        card.setHandleClick(() => {
+            PlayerController.selectCard(player, card);
+        });
     }
 }
 
