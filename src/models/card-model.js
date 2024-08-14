@@ -1,8 +1,8 @@
 class CardModel {
-    constructor(suit, rank, id) {
+    constructor(suit, rank) {
         this.suit = suit;
         this.rank = rank;
-        this.id = id;
+        this.id = null;
     }
 
     getSuit() {
@@ -15,6 +15,10 @@ class CardModel {
 
     getId() {
         return this.id;
+    }
+
+    setId(id) {
+        this.id = id;
     }
 }
 
