@@ -39,7 +39,7 @@ class PlayerModel {
     }
 
     removeCard(cardId) {
-        this.cards = this.cards.filter(card => card.getId() !== cardId);
+        this.cards = this.cards.filter(card => card.id !== cardId);
     }
 }
 
