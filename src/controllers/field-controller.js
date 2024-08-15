@@ -133,11 +133,12 @@ class FieldController {
     static canAddCard(card, mode) {
         const lastPair = this.getLastCardPair();
         const isDuplicate = this.isDuplicateCard(card);
+        const canToss = this.canTossCard(card);
         const attacker = 'attacker';
         const defender = 'defender';
 
         if (mode === attacker) {
-            return !isDuplicate;
+            return !isDuplicate && canToss;
         }
 
         if (mode === defender) {
