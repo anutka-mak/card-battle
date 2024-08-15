@@ -21,7 +21,7 @@ class CardPairModel {
     }
 
     isPairComplete() {
-        return this.attacker !== null && this.defender !== null;
+        return this.attacker && this.defender;
     }
 }
 
