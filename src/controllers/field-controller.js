@@ -41,8 +41,6 @@ class FieldController {
             CardPairController.addDefender(lastPair, card);
             this.isCanBeat(lastPair);
             this.renderField();
-        } else {
-            console.log("Cannot use a card of a different suit.");
         }
     }
 
@@ -64,7 +62,10 @@ class FieldController {
     static canDefenderUseCard(lastPair, defenderCard) {
         const attackerCard = lastPair.getAttacker();
 
-        return attackerCard.getSuit().name === defenderCard.getSuit().name;
+        const isSameSuit = attackerCard.getSuit().name === defenderCard.getSuit().name;
+        const isNotLessValue = defenderCard.getRank().value >= attackerCard.getRank().value;
+
+        return isSameSuit && isNotLessValue;
     }
 
     static isDuplicateCard(card) {
