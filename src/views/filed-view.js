@@ -8,7 +8,6 @@ class FieldView {
 
     static onFieldClick(callback) {
         const fieldElement = document.querySelector('.field');
-
         fieldElement.addEventListener('click', callback);
     }
 

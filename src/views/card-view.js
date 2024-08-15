@@ -8,13 +8,13 @@ class CardView {
         const generatedId = `${suit.name.toLowerCase()}-${rank.name.toLowerCase()}`;
         card.setId(generatedId);
 
-        const cardElement = document.createElement('div');
-        cardElement.classList.add('card');
+        const cardEl = document.createElement('div');
+        cardEl.classList.add('card');
+        cardEl.id = card.getId();
 
         if (role !== undefined) {
-            cardElement.classList.add(`card__${role}`);
+            cardEl.classList.add(`card__${role}`);
         }
-        cardElement.id = card.getId();
 
         const rankLabel = document.createElement('div');
         rankLabel.classList.add('card__label');
@@ -37,22 +37,22 @@ class CardView {
         const suitImageBottomLeft = createSuitImage('image card__image_bottom-left');
         const suitImageCenter = createSuitImage('image card__image_size-m');
 
-        cardElement.appendChild(rankLabel);
-        cardElement.appendChild(suitImageTopRight);
-        cardElement.appendChild(suitImageCenter);
-        cardElement.appendChild(suitImageBottomLeft);
+        cardEl.appendChild(rankLabel);
+        cardEl.appendChild(suitImageTopRight);
+        cardEl.appendChild(suitImageCenter);
+        cardEl.appendChild(suitImageBottomLeft);
 
-        container.appendChild(cardElement);
+        container.appendChild(cardEl);
 
         const handleClick = card.getHandleClick();
 
-        cardElement.addEventListener('click', () => {
+        cardEl.addEventListener('click', () => {
             if (handleClick) handleClick();
-            cardElement.classList.toggle('selected');
+            cardEl.classList.toggle('selected');
             PlayerView.selectCard(card);
         });
 
-        card.element = cardElement;
+        card.element = cardEl;
     }
 }
 

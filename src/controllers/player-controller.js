@@ -8,8 +8,10 @@ class PlayerController {
 
     static createPlayer(name, mode) {
         const player = new PlayerModel(name, mode);
+
         player.setMode(mode);
         this.players.push(player);
+
         return player;
     }
 

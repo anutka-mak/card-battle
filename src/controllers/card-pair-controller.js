@@ -7,11 +7,13 @@ class CardPairController {
 
     static addAttacker(cardPair, card) {
         cardPair.setAttacker(card);
+
         return cardPair;
     }
 
     static addDefender(cardPair, card) {
         cardPair.setDefender(card);
+
         return cardPair;
     }
 }

@@ -63,7 +63,7 @@ class FieldController {
         const attackerCard = lastPair.getAttacker();
 
         const isSameSuit = attackerCard.getSuit().name === defenderCard.getSuit().name;
-        const isNotLessValue = defenderCard.getRank().value >= attackerCard.getRank().value;
+        const isNotLessValue = defenderCard.getRank().value > attackerCard.getRank().value;
 
         return isSameSuit && isNotLessValue;
     }
@@ -134,12 +134,13 @@ class FieldController {
     static canAddCard(card, mode) {
         const lastPair = this.getLastCardPair();
         const isDuplicate = this.isDuplicateCard(card);
-        const canToss = this.canTossCard(card);
+        const canTossCard = this.canTossCard(card);
+
         const attacker = 'attacker';
         const defender = 'defender';
 
         if (mode === attacker) {
-            return !isDuplicate && canToss;
+            return !isDuplicate && canTossCard;
         }
 
         if (mode === defender) {
