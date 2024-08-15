@@ -1,9 +1,9 @@
 import CardView from "./card-view.js";
 
 class FieldView {
-    static renderCard(card) {
+    static renderCard(card, role) {
         const fieldElement = document.querySelector('.field');
-        CardView.render(card, fieldElement);
+        CardView.render(card, fieldElement, role);
     }
 
     static onFieldClick(callback) {

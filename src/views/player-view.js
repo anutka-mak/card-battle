@@ -2,55 +2,41 @@ import CardView from "./card-view.js";
 
 class PlayerView {
     static renderPlayer(player) {
-        const cardBoard = document.querySelector('.card-board');
         const playerName = player.getName();
-        const playerClassName = playerName.replace(/\s+/g, '-');
-        const playerContainerId = `player-container-${playerClassName}`;
+        const playerNameWithDashes = playerName.replace(/\s+/g, '-');
+        const playerClassName = playerNameWithDashes.toLowerCase();
+        const playerContainer = document.querySelector(`.${playerClassName}`);
 
-        let playerContainer = document.getElementById(playerContainerId);
+        if (playerContainer) {
+            playerContainer.textContent = '';
 
-        if (!playerContainer) {
-            playerContainer = document.createElement('div');
-            playerContainer.classList.add('player__cards');
-            playerContainer.id = playerContainerId;
-            cardBoard.appendChild(playerContainer);
-
-            const playerInfoEl = document.createElement('div');
-            playerInfoEl.classList.add('player__info');
+            const playerInfoContainer = document.createElement('div');
+            playerInfoContainer.classList.add('player-info');
 
             const playerNameEl = document.createElement('p');
             playerNameEl.textContent = `Player name: ${player.getName()}`;
-            playerInfoEl.appendChild(playerNameEl);
+            playerInfoContainer.appendChild(playerNameEl);
 
             const playerStatusEl = document.createElement('p');
             playerStatusEl.textContent = `Player mode: ${player.getMode()}`;
-            playerInfoEl.appendChild(playerStatusEl);
+            playerInfoContainer.appendChild(playerStatusEl);
 
-            const playerCardsEl = document.createElement('div');
-            playerCardsEl.classList.add('player');
-            playerCardsEl.id = `cards-container-${player.getName().replace(/\s+/g, '-')}`;
+            playerContainer.appendChild(playerInfoContainer);
 
-            playerContainer.appendChild(playerInfoEl);
-            playerContainer.appendChild(playerCardsEl);
+            this.renderCards(player, playerContainer);
         }
-
-        this.renderCards(player);
     }
 
-    static renderCards(player) {
-        const playerName = player.getName();
-        const playerClassName = playerName.replace(/\s+/g, '-');
+    static renderCards(player, container) {
+        const cards = player.getCards();
+        const cardsContainer = document.createElement('div');
+        cardsContainer.classList.add('player-cards');
 
-        const cardsContainerId = `cards-container-${playerClassName}`;
-        const cardsContainer = document.getElementById(cardsContainerId);
+        cards.forEach(card => {
+            CardView.render(card, cardsContainer);
+        });
 
-        if (cardsContainer) {
-            cardsContainer.textContent = '';
-            const cards = player.getCards();
-            cards.forEach(card => {
-                CardView.render(card, cardsContainer);
-            });
-        }
+        container.appendChild(cardsContainer);
     }
 
     static selectCard(card) {

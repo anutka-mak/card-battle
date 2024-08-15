@@ -122,10 +122,10 @@ class FieldController {
             const attackerCard = pair.getAttacker();
             const defenderCard = pair.getDefender();
 
-            FieldView.renderCard(attackerCard);
+            FieldView.renderCard(attackerCard, 'attacker');
 
             if (defenderCard) {
-                FieldView.renderCard(defenderCard);
+                FieldView.renderCard(defenderCard, 'defender');
             }
         });
     }

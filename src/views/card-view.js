@@ -1,7 +1,7 @@
 import PlayerView from "./player-view.js";
 
 class CardView {
-    static render(card, container) {
+    static render(card, container, role) {
         const rank = card.getRank();
         const suit = card.getSuit();
 
@@ -10,6 +10,10 @@ class CardView {
 
         const cardElement = document.createElement('div');
         cardElement.classList.add('card');
+
+        if (role !== undefined) {
+            cardElement.classList.add(`card__${role}`);
+        }
         cardElement.id = card.getId();
 
         const rankLabel = document.createElement('div');
