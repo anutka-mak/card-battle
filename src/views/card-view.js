@@ -44,8 +44,10 @@ class CardView {
 
         container.appendChild(cardElement);
 
+        const handleClick = card.getHandleClick();
+
         cardElement.addEventListener('click', () => {
-            card.getHandleClick();
+            if (handleClick) handleClick();
             cardElement.classList.toggle('selected');
             PlayerView.selectCard(card);
         });

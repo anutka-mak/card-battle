@@ -27,9 +27,7 @@ class CardModel {
     }
 
     getHandleClick() {
-        if (this.onCardClick) {
-            this.onCardClick(this.id);
-        }
+        return this.onCardClick;
     }
 }
 
