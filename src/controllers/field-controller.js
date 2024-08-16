@@ -1,4 +1,4 @@
-import CardPairController from "./card-pair-controller.js";
+import PairCardController from "./pair-card-controller.js";
 import CardController from "./card-controller.js";
 import PlayerController from "./player-controller.js";
 import FieldView from "../views/field-view.js";
@@ -22,8 +22,8 @@ class FieldController {
         const canTossCard = this.canTossCard(card);
 
         if (canTossCard) {
-            const cardPair = CardPairController.createPair();
-            CardPairController.addAttacker(cardPair, card);
+            const cardPair = PairCardController.createPair();
+            PairCardController.addAttacker(cardPair, card);
             this.fieldCard.push(cardPair);
             this.renderField();
         } else {
@@ -36,7 +36,7 @@ class FieldController {
         const canUseCard = lastPair && this.canDefenderUseCard(lastPair, card);
 
         if (canUseCard) {
-            CardPairController.addDefender(lastPair, card);
+            PairCardController.addDefender(lastPair, card);
             this.isCanBeat(lastPair);
             this.renderField();
         }

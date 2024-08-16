@@ -1,4 +1,4 @@
-class CardPairModel {
+class PairCardModel {
     constructor() {
         this.attacker = null;
         this.defender = null;
@@ -25,4 +25,4 @@ class CardPairModel {
     }
 }
 
-export default CardPairModel;
+export default PairCardModel;

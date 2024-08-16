@@ -1,8 +1,8 @@
-import CardPairModel from "../models/card-pair-model.js";
+import PairCardModel from "../models/pair-card-model.js";
 
-class CardPairController {
+class PairCardController {
     static createPair() {
-        return new CardPairModel();
+        return new PairCardModel();
     }
 
     static addAttacker(cardPair, card) {
@@ -18,4 +18,4 @@ class CardPairController {
     }
 }
 
-export default CardPairController;
+export default PairCardController;
