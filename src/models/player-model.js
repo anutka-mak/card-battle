@@ -34,6 +34,10 @@ class PlayerModel {
         return this.selectedCard;
     }
 
+    removeSelectedCard() {
+        this.selectedCard = null;
+    }
+
     getCardById(cardId) {
         return this.cards.find(card => card.id === cardId);
     }

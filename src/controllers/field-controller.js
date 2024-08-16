@@ -7,7 +7,7 @@ class FieldController {
     static fieldCard = [];
     static discardPile = [];
 
-    static addCard(player, card) {
+    static addCardToField(player, card) {
         const mode = PlayerController.getPlayerMode(player);
         const attacker = 'attacker';
 
@@ -19,10 +19,9 @@ class FieldController {
     }
 
     static addAttackerCard(card) {
-        const isDuplicateCard = this.isDuplicateCard(card);
         const canTossCard = this.canTossCard(card);
 
-        if (!isDuplicateCard && canTossCard) {
+        if (canTossCard) {
             const cardPair = CardPairController.createPair();
             CardPairController.addAttacker(cardPair, card);
             this.fieldCard.push(cardPair);
@@ -35,9 +34,8 @@ class FieldController {
     static addDefenderCard(card) {
         const lastPair = this.getLastCardPair();
         const canUseCard = lastPair && this.canDefenderUseCard(lastPair, card);
-        const isDuplicateCard = this.isDuplicateCard(card);
 
-        if (canUseCard && !isDuplicateCard) {
+        if (canUseCard) {
             CardPairController.addDefender(lastPair, card);
             this.isCanBeat(lastPair);
             this.renderField();
@@ -66,23 +64,6 @@ class FieldController {
         const isNotLessValue = defenderCard.getRank().value > attackerCard.getRank().value;
 
         return isSameSuit && isNotLessValue;
-    }
-
-    static isDuplicateCard(card) {
-        return !!this.fieldCard.find(pair => {
-            const attackerCard = pair.getAttacker();
-            const defenderCard = pair.getDefender();
-
-            const isDuplicateAttacker =
-                attackerCard.getRank().value === card.getRank().value &&
-                attackerCard.getSuit().name === card.getSuit().name;
-
-            const isDuplicateDefender = defenderCard &&
-                defenderCard.getRank().value === card.getRank().value &&
-                defenderCard.getSuit().name === card.getSuit().name;
-
-            return isDuplicateAttacker || isDuplicateDefender;
-        });
     }
 
     static getLastCardPair() {
@@ -126,35 +107,32 @@ class FieldController {
 
     static canAddCard(card, mode) {
         const lastPair = this.getLastCardPair();
-        const isDuplicate = this.isDuplicateCard(card);
         const canTossCard = this.canTossCard(card);
 
         const attacker = 'attacker';
-        const defender = 'defender';
 
         if (mode === attacker) {
-            return !isDuplicate && canTossCard;
+            console.log("Attacker is trying to add a card.");
+            return canTossCard;
+        } else {
+            return lastPair && this.canDefenderUseCard(lastPair, card);
         }
-
-        if (mode === defender) {
-            return lastPair && this.canDefenderUseCard(lastPair, card) && !isDuplicate;
-        }
-
+        
         return false;
     }
-
+    
     static canTossCard(card) {
         if (this.fieldCard.length === 0) {
             return true;
         }
-
+        
         const rankValue = card.getRank().value;
-
+        
         const matchingPair = this.fieldCard.find(pair => {
             const attackerRankValue = pair.getAttacker().getRank().value;
             const defenderRankValue = pair.getDefender() ? pair.getDefender().getRank().value : null;
 
-            return attackerRankValue === rankValue || defenderRankValue === rankValue;
+            return attackerRankValue === rankValue || (defenderRankValue !== null && defenderRankValue === rankValue);
         });
 
         return !!matchingPair;

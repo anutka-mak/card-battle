@@ -38,15 +38,21 @@ class PlayerController {
     }
 
     static moveCardToField(player, card) {
-        const mode = this.getPlayerMode(player);
-        const canAddCard = FieldController.canAddCard(card, mode);
+        const isSamePlayer = this.findPlayerByCardId(card.getId()) === player;
 
-        if (canAddCard) {
-            FieldController.addCard(player, card);
-            this.removeCardFromPlayer(player, card.getId());
-            player.removeSelectedCard();
-        } else {
-            console.log("This card cannot be added to the field.");
+        if (isSamePlayer) {
+            const mode = this.getPlayerMode(player);
+            const canAddCard = FieldController.canAddCard(card, mode);
+
+            if (canAddCard) {
+                FieldController.addCardToField(player, card);
+                this.removeCardFromPlayer(player, card.getId());
+                player.removeSelectedCard();
+            } else {
+                console.log("This card cannot be added to the field.");
+                player.removeSelectedCard();
+                this.renderPlayerCards(player);
+            }
         }
     }
 
