@@ -108,17 +108,14 @@ class FieldController {
     static canAddCard(card, mode) {
         const lastPair = this.getLastCardPair();
         const canTossCard = this.canTossCard(card);
-
         const attacker = 'attacker';
 
         if (mode === attacker) {
             console.log("Attacker is trying to add a card.");
             return canTossCard;
-        } else {
-            return lastPair && this.canDefenderUseCard(lastPair, card);
         }
         
-        return false;
+        return lastPair && this.canDefenderUseCard(lastPair, card);
     }
     
     static canTossCard(card) {
