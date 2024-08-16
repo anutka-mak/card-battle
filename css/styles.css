@@ -37,7 +37,7 @@
 .card-board {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     height: 100vh;
 }
@@ -121,19 +121,6 @@
     transform: scale(1.03);
 }
 
-.field {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 50px);
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    height: 420px;
-    width: 60%;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
 .player-1, .player-2 {
     display: flex;
     justify-content: center;
@@ -155,11 +142,28 @@
     color: var(--bg-color);
 }
 
-.card__attacker {
-    border: 2px solid rgb(224, 107, 107);
+.field {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    height: 420px;
+    text-align: center;
+    align-items: center;
+    width: 62%;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.pair-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .card__defender {
+    position: absolute;
+    top: 60px;
     border: 2px solid rgb(129, 164, 129);
     background-color: rgb(185, 239, 185);
 }

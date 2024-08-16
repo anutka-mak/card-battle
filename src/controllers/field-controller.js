@@ -120,14 +120,7 @@ class FieldController {
     static renderField() {
         FieldView.clearField();
         this.fieldCard.forEach(pair => {
-            const attackerCard = pair.getAttacker();
-            const defenderCard = pair.getDefender();
-
-            FieldView.renderCard(attackerCard, 'attacker');
-
-            if (defenderCard) {
-                FieldView.renderCard(defenderCard, 'defender');
-            }
+            FieldView.renderCardPair(pair);
         });
     }
 

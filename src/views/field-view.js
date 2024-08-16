@@ -1,9 +1,25 @@
 import CardView from "./card-view.js";
 
 class FieldView {
-    static renderCard(card, role) {
+    static renderCard(card, role, container) {
+        CardView.render(card, container, role);
+    }
+
+    static renderCardPair(pair) {
         const fieldElement = document.querySelector('.field');
-        CardView.render(card, fieldElement, role);
+        const pairContainer = document.createElement('div');
+        pairContainer.classList.add('pair-card');
+
+        const attackerCard = pair.getAttacker();
+        const defenderCard = pair.getDefender();
+
+        this.renderCard(attackerCard, 'attacker', pairContainer);
+
+        if (defenderCard) {
+            this.renderCard(defenderCard, 'defender', pairContainer);
+        }
+
+        fieldElement.appendChild(pairContainer);
     }
 
     static onFieldClick(callback) {
