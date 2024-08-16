@@ -1,7 +1,7 @@
 import CardPairController from "./card-pair-controller.js";
 import CardController from "./card-controller.js";
 import PlayerController from "./player-controller.js";
-import FieldView from "../views/filed-view.js";
+import FieldView from "../views/field-view.js";
 
 class FieldController {
     static fieldCard = [];
