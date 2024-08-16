@@ -38,7 +38,8 @@ class PlayerController {
     }
 
     static moveCardToField(player, card) {
-        const isSamePlayer = this.findPlayerByCardId(card.getId()) === player;
+        const cardId = card.getId();
+        const isSamePlayer = this.findPlayerByCardId(cardId) === player;
 
         if (isSamePlayer) {
             const mode = this.getPlayerMode(player);
