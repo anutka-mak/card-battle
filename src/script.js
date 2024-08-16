@@ -5,8 +5,8 @@ import FieldController from "./controllers/field-controller.js";
 DeckController.initializeDeck();
 DeckController.shuffle();
 
-const player1 = PlayerController.createPlayer('Player 1', 'attacker');
-const player2 = PlayerController.createPlayer('Player 2', 'defender');
+const player1 = PlayerController.createPlayer('Player 1', 'defender');
+const player2 = PlayerController.createPlayer('Player 2', 'attacker');
 
 const player1Cards = DeckController.drawCards(6);
 const player2Cards = DeckController.drawCards(6);
