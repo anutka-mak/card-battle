@@ -5,13 +5,13 @@ class FieldView {
         CardView.render(card, container, role);
     }
 
-    static renderCardPair(pair) {
+    static renderCardPair(cardPair) {
         const fieldElement = document.querySelector('.field');
         const pairContainer = document.createElement('div');
         pairContainer.classList.add('pair-card');
 
-        const attackerCard = pair.getAttacker();
-        const defenderCard = pair.getDefender();
+        const attackerCard = cardPair.getAttacker();
+        const defenderCard = cardPair.getDefender();
 
         this.renderCard(attackerCard, 'attacker', pairContainer);
 
@@ -20,6 +20,14 @@ class FieldView {
         }
 
         fieldElement.appendChild(pairContainer);
+        return pairContainer;
+    }
+
+    static onPairCardClick(callback) {
+        const pairCardElements = document.querySelectorAll('.pair-card');
+        pairCardElements.forEach(pairCardElement => {
+            pairCardElement.addEventListener('click', () => callback(pairCardElement));
+        });
     }
 
     static onFieldClick(callback) {

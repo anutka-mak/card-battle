@@ -19,3 +19,8 @@ PlayerController.renderPlayerCards(player2);
 
 FieldController.handleFieldClick(player1);
 FieldController.handleFieldClick(player2);
+
+FieldController.handlePairClick(player1);
+FieldController.handlePairClick(player2);
+
+FieldController.renderField();

@@ -94,10 +94,23 @@ class FieldController {
     static handleFieldClick(player) {
         FieldView.onFieldClick(() => {
             const card = player.getSelectedCard();
-            PlayerController.moveCardToField(player, card);
+            PlayerController.moveCardToField(player, card)
         });
     }
 
+    static handlePairClick(player) {
+        FieldView.onPairCardClick(() => {
+            console.log("Pair clicked!");
+            const card = player.getSelectedCard();
+            PlayerController.moveCardToField(card);
+        });
+    }
+
+    static getPairByContainer(container) {
+        const index = Array.from(container.parentElement.children).indexOf(container);
+        return this.fieldCard[index];
+    }
+    
     static renderField() {
         FieldView.clearField();
         this.fieldCard.forEach(pair => {
