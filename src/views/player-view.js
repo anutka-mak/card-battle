@@ -40,7 +40,7 @@ class PlayerView {
     }
 
     static selectCard(card) {
-        this.deleteSelectedCard();
+        this.removeSelectedCard();
         this.addSelectedCard(card);
     }
 
@@ -48,7 +48,7 @@ class PlayerView {
         card.element.classList.add('selected');
     }
 
-    static deleteSelectedCard() {
+    static removeSelectedCard() {
         const selectedCards = document.querySelectorAll('.selected');
         selectedCards.forEach(card => card.classList.remove('selected'));
     }

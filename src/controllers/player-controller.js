@@ -48,11 +48,12 @@ class PlayerController {
             if (canAddCard) {
                 FieldController.addCardToField(player, card, cardPair);
                 this.removeCardFromPlayer(player, card.getId());
+                player.clearSelectedCard();
             } else {
                 console.log("This card cannot be added to the field.");
             }
 
-            player.removeSelectedCard();
+            player.clearSelectedCard(player);
             this.renderPlayerCards(player);
         }
     }

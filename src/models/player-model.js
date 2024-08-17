@@ -34,7 +34,7 @@ class PlayerModel {
         return this.selectedCard;
     }
 
-    removeSelectedCard() {
+    clearSelectedCard() {
         this.selectedCard = null;
     }
 
