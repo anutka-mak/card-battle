@@ -8,7 +8,7 @@ class PlayerView {
         const playerContainer = document.querySelector(`.${playerClassName}`);
 
         if (playerContainer) {
-            playerContainer.textContent = '';
+            playerContainer.replaceChildren();
 
             const playerInfoContainer = document.createElement('div');
             playerInfoContainer.classList.add('player-info');
@@ -40,7 +40,7 @@ class PlayerView {
     }
 
     static selectCard(card) {
-        this.removeSelectedCard();
+        this.deleteSelectedCard();
         this.addSelectedCard(card);
     }
 
@@ -48,7 +48,7 @@ class PlayerView {
         card.element.classList.add('selected');
     }
 
-    static removeSelectedCard() {
+    static deleteSelectedCard() {
         const selectedCards = document.querySelectorAll('.selected');
         selectedCards.forEach(card => card.classList.remove('selected'));
     }

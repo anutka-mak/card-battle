@@ -37,7 +37,7 @@ class PlayerController {
         PlayerView.selectCard(card);
     }
 
-    static moveCardToField(player, card) {
+    static moveCardToField(player, card, cardPair) {
         const cardId = card.getId();
         const isSamePlayer = this.findPlayerByCardId(cardId) === player;
 
@@ -46,29 +46,29 @@ class PlayerController {
             const canAddCard = FieldController.canAddCard(card, mode);
 
             if (canAddCard) {
-                FieldController.addCardToField(player, card);
+                FieldController.addCardToField(player, card, cardPair);
                 this.removeCardFromPlayer(player, card.getId());
-                player.removeSelectedCard();
             } else {
                 console.log("This card cannot be added to the field.");
-                player.removeSelectedCard();
-                this.renderPlayerCards(player);
             }
+
+            player.removeSelectedCard();
+            this.renderPlayerCards(player);
         }
     }
 
     static removeCardFromPlayer(player, cardId) {
         player.removeCard(cardId);
-        this.renderPlayerCards(player);
     }
 
     static renderPlayerCards(player) {
-        PlayerView.renderPlayer(player);
-
         const playerCards = player.getCards();
+
         playerCards.forEach(card => {
             CardController.handleCardClick(player, card);
         });
+
+        PlayerView.renderPlayer(player);
     }
 }
 

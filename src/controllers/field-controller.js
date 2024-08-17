@@ -7,21 +7,22 @@ class FieldController {
     static fieldCard = [];
     static discardPile = [];
 
-    static addCardToField(player, card) {
+    static addCardToField(player, card, cardPair) {
         const mode = PlayerController.getPlayerMode(player);
         const attacker = 'attacker';
 
         if (mode === attacker) {
             this.addAttackerCard(card);
         } else {
-            this.addDefenderCard(card);
+            this.addDefenderCard(cardPair, card);
         }
     }
 
     static addAttackerCard(card) {
         const canTossCard = this.canTossCard(card);
+        const isFieldEmpty = this.isFieldEmpty();
 
-        if (canTossCard) {
+        if (canTossCard || isFieldEmpty) {
             const cardPair = PairCardController.createPair();
             PairCardController.addAttacker(cardPair, card);
             this.fieldCard.push(cardPair);
@@ -31,13 +32,10 @@ class FieldController {
         }
     }
 
-    static addDefenderCard(card) {
-        const lastPair = this.getLastCardPair();
-        const canUseCard = lastPair && this.canDefenderUseCard(lastPair, card);
-
-        if (canUseCard) {
-            PairCardController.addDefender(lastPair, card);
-            this.isCanBeat(lastPair);
+    static addDefenderCard(pair, card) {
+        if (this.canDefenderUseCard(pair, card)) {
+            PairCardController.addDefender(pair, card);
+            this.isCanBeat(pair);
             this.renderField();
         }
     }
@@ -46,41 +44,73 @@ class FieldController {
         const attacker = cardPair.getAttacker();
         const defender = cardPair.getDefender();
 
-        const result = CardController.canBeat(defender, attacker);
-
-        if (result) {
-            console.log("The card is beaten!");
-        } else {
-            console.log("The card is not beaten!");
-        }
-
-        return result;
+        return CardController.canBeat(defender, attacker);
     }
 
-    static canDefenderUseCard(lastPair, defenderCard) {
-        const attackerCard = lastPair.getAttacker();
-
+    static canDefenderUseCard(pair, defenderCard) {
+        const attackerCard = pair.getAttacker();
         const isSameSuit = attackerCard.getSuit().name === defenderCard.getSuit().name;
         const isNotLessValue = defenderCard.getRank().value > attackerCard.getRank().value;
 
         return isSameSuit && isNotLessValue;
     }
 
-    static getLastCardPair() {
-        return this.fieldCard.at(-1);
+    static findIncompletePairs() {
+        return this.fieldCard.filter(pair => !pair.isPairComplete());
     }
 
-    static removeCardPair(cardPair) {
-        this.fieldCard = this.fieldCard.filter(pair => pair !== cardPair);
+    static renderField() {
+        FieldView.clearField();
+        this.fieldCard.forEach(pair => FieldView.renderCardPair(pair));
+    }
+
+    static isFieldEmpty() {
+        return this.fieldCard.length === 0;
+    }
+
+    static canAddCard(card, mode) {
+        const attacker = 'attacker';
+        const defender = 'defender';
+
+        if (mode === attacker) {
+            if (this.isFieldEmpty()) {
+                return true;
+            }
+
+            return this.canTossCard(card);
+        }
+
+        if (mode === defender) {
+            const incompletePairs = this.findIncompletePairs();
+
+            return incompletePairs.some(pair => this.canDefenderUseCard(pair, card));
+        }
+
+        return false;
+    }
+
+    static canTossCard(card) {
+        const rankValue = card.getRank().value;
+
+        return this.fieldCard.some(pair => {
+            const attackerRankValue = pair.getAttacker().getRank().value;
+            const defenderRankValue = pair.getDefender()?.getRank().value;
+
+            return attackerRankValue === rankValue || defenderRankValue === rankValue;
+        });
+    }
+
+    static areAllCardsBeaten() {
+        return this.fieldCard.every(pair => pair.isPairComplete() && this.isCanBeat(pair));
     }
 
     static moveCardsToDiscard(pairs) {
-        const allCardsBeaten = this.areAllCardsBeaten();
+        const areAllCardsBeaten = this.areAllCardsBeaten();
 
-        if (allCardsBeaten) {
+        if (areAllCardsBeaten) {
             pairs.forEach(pair => {
                 const attackerCard = pair.getAttacker();
-                const defenderCard = pair.getDefender();
+                const defenderCard = pair.getDefender()
 
                 this.discardPile.push(attackerCard, defenderCard);
                 this.removeCardPair(pair);
@@ -91,65 +121,27 @@ class FieldController {
         }
     }
 
+    static removeCardPair(cardPair) {
+        this.fieldCard = this.fieldCard.filter(pair => pair !== cardPair);
+    }
+
     static handleFieldClick(player) {
         FieldView.onFieldClick(() => {
             const card = player.getSelectedCard();
-            PlayerController.moveCardToField(player, card)
+            PlayerController.moveCardToField(player, card);
         });
     }
 
     static handlePairClick(player) {
-        FieldView.onPairCardClick(() => {
-            console.log("Pair clicked!");
+        FieldView.onPairCardClick((cardPair) => {
             const card = player.getSelectedCard();
-            PlayerController.moveCardToField(card);
+
+            if (card) {
+                PlayerController.moveCardToField(player, card, cardPair);
+            } else {
+                console.log("No card selected to move to the field.");
+            }
         });
-    }
-
-    static getPairByContainer(container) {
-        const index = Array.from(container.parentElement.children).indexOf(container);
-        return this.fieldCard[index];
-    }
-    
-    static renderField() {
-        FieldView.clearField();
-        this.fieldCard.forEach(pair => {
-            FieldView.renderCardPair(pair);
-        });
-    }
-
-    static canAddCard(card, mode) {
-        const lastPair = this.getLastCardPair();
-        const canTossCard = this.canTossCard(card);
-        const attacker = 'attacker';
-
-        if (mode === attacker) {
-            console.log("Attacker is trying to add a card.");
-            return canTossCard;
-        }
-        
-        return lastPair && this.canDefenderUseCard(lastPair, card);
-    }
-    
-    static canTossCard(card) {
-        if (this.fieldCard.length === 0) {
-            return true;
-        }
-        
-        const rankValue = card.getRank().value;
-        
-        const matchingPair = this.fieldCard.find(pair => {
-            const attackerRankValue = pair.getAttacker().getRank().value;
-            const defenderRankValue = pair.getDefender() ? pair.getDefender().getRank().value : null;
-
-            return attackerRankValue === rankValue || (defenderRankValue !== null && defenderRankValue === rankValue);
-        });
-
-        return !!matchingPair;
-    }
-
-    static areAllCardsBeaten() {
-        return this.fieldCard.every(pair => pair.isPairComplete() && this.isCanBeat(pair));
     }
 }
 

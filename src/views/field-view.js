@@ -8,7 +8,10 @@ class FieldView {
     static renderCardPair(cardPair) {
         const fieldElement = document.querySelector('.field');
         const pairContainer = document.createElement('div');
+        const pairId = cardPair.getAttacker().getId()
+
         pairContainer.classList.add('pair-card');
+        pairContainer.id = `${pairId}`;
 
         const attackerCard = cardPair.getAttacker();
         const defenderCard = cardPair.getDefender();
@@ -19,15 +22,17 @@ class FieldView {
             this.renderCard(defenderCard, 'defender', pairContainer);
         }
 
+        pairContainer.addEventListener('click', (event) => {
+            event.stopPropagation();
+            this.pairClickCallback(cardPair, pairContainer);
+        });
+
         fieldElement.appendChild(pairContainer);
         return pairContainer;
     }
 
     static onPairCardClick(callback) {
-        const pairCardElements = document.querySelectorAll('.pair-card');
-        pairCardElements.forEach(pairCardElement => {
-            pairCardElement.addEventListener('click', () => callback(pairCardElement));
-        });
+        this.pairClickCallback = callback;
     }
 
     static onFieldClick(callback) {
@@ -37,7 +42,7 @@ class FieldView {
 
     static clearField() {
         const fieldElement = document.querySelector('.field');
-        fieldElement.textContent = '';
+        fieldElement.replaceChildren();
     }
 }
 
