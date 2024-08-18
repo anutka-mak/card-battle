@@ -138,6 +138,18 @@ class FieldController {
             }
         });
     }
+
+    static handlePlayerClick(player) {
+        const modePlayer = PlayerController.getPlayerMode(player);
+        const attacker = 'attacker';
+
+        if (modePlayer === attacker) {
+            this.handleFieldClick(player);
+        } else {
+            this.handlePairClick(player);
+        }
+    }
+
 }
 
 export default FieldController;
