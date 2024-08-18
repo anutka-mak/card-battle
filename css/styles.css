@@ -50,7 +50,6 @@
     font-weight: 500;
     text-align: center;
     color: var(--bg-color);
-    border-bottom: 1px solid var(--bg-color);
 }
 
 .card-board__items {
@@ -169,3 +168,24 @@
     background-color: rgb(185, 239, 185);
 }
 
+.trump-suit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 6px 12px;
+    width: 180px;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    color: var(--bg-color);
+    background-color: #8795a5;
+
+    border-radius: 8px;
+}
+
+.trump-image {
+    width: 21px;
+    height: 21px;
+}

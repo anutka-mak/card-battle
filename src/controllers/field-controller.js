@@ -2,6 +2,7 @@ import PairCardController from "./pair-card-controller.js";
 import CardController from "./card-controller.js";
 import PlayerController from "./player-controller.js";
 import FieldView from "../views/field-view.js";
+import TrumpCardController from "./trump-card-controller.js";
 
 class FieldController {
     static fieldCard = [];
@@ -48,11 +49,7 @@ class FieldController {
     }
 
     static canDefenderUseCard(pair, defenderCard) {
-        const attackerCard = pair.getAttacker();
-        const isSameSuit = attackerCard.getSuit().name === defenderCard.getSuit().name;
-        const isNotLessValue = defenderCard.getRank().value > attackerCard.getRank().value;
-
-        return isSameSuit && isNotLessValue;
+        return CardController.canBeat(defenderCard, pair.getAttacker());
     }
 
     static findIncompletePairs() {

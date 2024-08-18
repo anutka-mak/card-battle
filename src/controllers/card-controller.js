@@ -1,5 +1,6 @@
 import CardModel from "../models/card-model.js";
 import PlayerController from "./player-controller.js";
+import TrumpCardController from "./trump-card-controller.js";
 
 class CardController {
     static createCard(suit, rank) {
@@ -7,6 +8,10 @@ class CardController {
     }
 
     static canBeat(tossupCard, fightCard) {
+        if (TrumpCardController.canTrumpBeat(tossupCard, fightCard)) {
+            return true;
+        }
+
         const tossupSuit = tossupCard.getSuit().name;
         const tossupValue = tossupCard.getRank().value;
 
