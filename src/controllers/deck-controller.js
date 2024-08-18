@@ -34,15 +34,15 @@ class DeckController {
         });
     }
 
-    static shuffle() {
-        this.cards.sort(() => Math.random() - 0.5);
-    }
-
     static drawCards(number) {
         const dealCards = this.cards.splice(0, number);
         this.renderCardCount();
 
         return dealCards;
+    }
+
+    static shuffle() {
+        this.cards.sort(() => Math.random() - 0.5);
     }
 
     static getCardsCount() {

@@ -1,19 +1,21 @@
 import DeckController from "./controllers/deck-controller.js";
-import CardController from "./controllers/card-controller.js";
+import PlayerController from "./controllers/player-controller.js";
+import FieldController from "./controllers/field-controller.js";
 
 DeckController.initializeDeck();
-DeckController.shuffle(); //варіант вкласти в ініціалізацію
+DeckController.shuffle();
+
+const player1 = PlayerController.createPlayer('Player 1', 'defender');
+const player2 = PlayerController.createPlayer('Player 2', 'attacker');
 
 const player1Cards = DeckController.drawCards(6);
 const player2Cards = DeckController.drawCards(6);
 
-const player1Element = document.querySelector('.player-1-cards');
-const player2Element = document.querySelector('.player-2-cards');
+PlayerController.takeCards(player1, player1Cards);
+PlayerController.takeCards(player2, player2Cards);
 
-player1Cards.forEach((cardModel) => {
-    CardController.renderCard(cardModel, player1Element);
-});
+PlayerController.renderPlayerCards(player1);
+PlayerController.renderPlayerCards(player2);
 
-player2Cards.forEach((cardModel) => {
-    CardController.renderCard(cardModel, player2Element);
-});
+FieldController.handlePairClick(player1);
+FieldController.handleFieldClick(player2);
