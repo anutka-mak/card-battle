@@ -2,7 +2,6 @@ import PairCardController from "./pair-card-controller.js";
 import CardController from "./card-controller.js";
 import PlayerController from "./player-controller.js";
 import FieldView from "../views/field-view.js";
-import TrumpCardController from "./trump-card-controller.js";
 
 class FieldController {
     static fieldCard = [];
@@ -36,7 +35,6 @@ class FieldController {
     static addDefenderCard(pair, card) {
         if (this.canDefenderUseCard(pair, card)) {
             PairCardController.addDefender(pair, card);
-            this.isCanBeat(pair);
             this.renderField();
         }
     }
