@@ -6,7 +6,9 @@ class TrumpCardView {
         const trumpImage = document.createElement('img');
         trumpImage.classList.add('trump-image');
         trumpImage.src = trumpCard.getSuit().imageUrl;
-        trumpImage.alt = `Trump suit - ${trumpCard.getSuit().name}`;
+
+        const trumpSuit = trumpCard.getSuit().name;
+        trumpImage.alt = `trump suit - ${trumpSuit.toLowerCase()}`;
         trumpEl.appendChild(trumpImage);
     }
 }

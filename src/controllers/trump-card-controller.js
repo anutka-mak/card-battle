@@ -14,18 +14,13 @@ class TrumpCardController {
         return this.trumpCard.getSuit().name;
     }
 
-    static isTrumpCard(card) {
-        const trumpSuit = this.getTrumpCard();
-        const cardSuit = card.getSuit().name
-
-        return cardSuit === trumpSuit;
-    }
-
     static canTrumpBeat(attackerCard, defenderCard) {
         const attackerSuit = attackerCard.getSuit().name;
         const defenderSuit = defenderCard.getSuit().name;
+
         const attackerValue = attackerCard.getRank().value;
         const defenderValue = defenderCard.getRank().value;
+
         const trumpSuit = this.getTrumpCard();
 
         const attackerIsTrump = attackerSuit === trumpSuit;
@@ -36,6 +31,7 @@ class TrumpCardController {
         } else if (attackerIsTrump && defenderIsTrump) {
             return attackerValue > defenderValue;
         }
+
         return false;
     }
 }
