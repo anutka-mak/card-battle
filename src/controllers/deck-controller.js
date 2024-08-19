@@ -1,17 +1,17 @@
-import CardController from "./card-controller.js";
 import DeckView from "../views/deck-view.js";
+import CardController from "./card-controller.js";
+import TrumpCardController from "./trump-card-controller.js";
 
 class DeckController {
     static cards = [];
+    static suits = [
+        { name: 'Hearts', imageUrl: "assets/images/hearts.png" },
+        { name: 'Diamonds', imageUrl: "assets/images/diamonds.png" },
+        { name: 'Clubs', imageUrl: "assets/images/clubs.png" },
+        { name: 'Spades', imageUrl: "assets/images/spades.png" }
+    ];
 
     static initializeDeck() {
-        const suits = [
-            { name: 'Hearts', imageUrl: "assets/images/hearts.png" },
-            { name: 'Diamonds', imageUrl: "assets/images/diamonds.png" },
-            { name: 'Clubs', imageUrl: "assets/images/clubs.png" },
-            { name: 'Spades', imageUrl: "assets/images/spades.png" }
-        ];
-
         const ranks = [
             { name: '6', value: 6 },
             { name: '7', value: 7 },
@@ -26,12 +26,14 @@ class DeckController {
 
         this.cards = [];
 
-        suits.forEach(suit => {
+        this.suits.forEach(suit => {
             ranks.forEach(rank => {
                 const card = CardController.createCard(suit, rank);
                 this.cards.push(card);
             });
         });
+
+        TrumpCardController.initializeTrumpCard(this.suits);
     }
 
     static drawCards(number) {

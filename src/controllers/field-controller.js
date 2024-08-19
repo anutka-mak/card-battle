@@ -35,7 +35,6 @@ class FieldController {
     static addDefenderCard(pair, card) {
         if (this.canDefenderUseCard(pair, card)) {
             PairCardController.addDefender(pair, card);
-            this.isCanBeat(pair);
             this.renderField();
         }
     }
@@ -48,11 +47,7 @@ class FieldController {
     }
 
     static canDefenderUseCard(pair, defenderCard) {
-        const attackerCard = pair.getAttacker();
-        const isSameSuit = attackerCard.getSuit().name === defenderCard.getSuit().name;
-        const isNotLessValue = defenderCard.getRank().value > attackerCard.getRank().value;
-
-        return isSameSuit && isNotLessValue;
+        return CardController.canBeat(defenderCard, pair.getAttacker());
     }
 
     static findIncompletePairs() {
@@ -143,6 +138,18 @@ class FieldController {
             }
         });
     }
+
+    static handlePlayerClick(player) {
+        const modePlayer = PlayerController.getPlayerMode(player);
+        const attacker = 'attacker';
+
+        if (modePlayer === attacker) {
+            this.handleFieldClick(player);
+        } else {
+            this.handlePairClick(player);
+        }
+    }
+
 }
 
 export default FieldController;

@@ -6,13 +6,27 @@ import FieldController from "./field-controller.js";
 class PlayerController {
     static players = [];
 
-    static createPlayer(name, mode) {
+    static createPlayer(name) {
+        const mode = this.determinePlayerMode();
         const player = new PlayerModel(name, mode);
-
-        player.setMode(mode);
         this.players.push(player);
+        this.renderPlayerCards(player);
 
         return player;
+    }
+
+    static determinePlayerMode() {
+        const attacker = 'attacker';
+        const defender = 'defender';
+
+        const countAttacker = this.players.filter(p => p.getMode() === attacker).length;
+        const countDefender = this.players.filter(p => p.getMode() === defender).length;
+
+        if (countAttacker === countDefender) {
+            return Math.random() < 0.5 ? attacker : defender;
+        }
+
+        return countAttacker > countDefender ? defender : attacker;
     }
 
     static getPlayerMode(player) {
