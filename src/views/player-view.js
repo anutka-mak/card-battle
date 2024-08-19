@@ -24,6 +24,7 @@ class PlayerView {
             playerContainer.appendChild(playerInfoContainer);
 
             this.renderCards(player, playerContainer);
+            this.renderActions(playerContainer);
         }
     }
 
@@ -38,6 +39,25 @@ class PlayerView {
 
         container.appendChild(cardsContainer);
     }
+
+    static renderActions(container) {
+        const actionsContainer = document.createElement('div');
+        actionsContainer.classList.add('player-actions');
+
+        const takeCardsButton = document.createElement('button');
+        takeCardsButton.classList.add('player-actions__take-cards-button');
+        takeCardsButton.textContent = 'take cards';
+
+        const doneButton = document.createElement('button');
+        doneButton.classList.add('player-actions__done-button');
+        doneButton.textContent = 'done';
+
+        actionsContainer.appendChild(takeCardsButton);
+        actionsContainer.appendChild(doneButton);
+
+        container.appendChild(actionsContainer);
+    }
+
 
     static selectCard(card) {
         this.removeSelectedCard();
