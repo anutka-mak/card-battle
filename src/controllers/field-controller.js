@@ -39,13 +39,6 @@ class FieldController {
         }
     }
 
-    static isCanBeat(cardPair) {
-        const attacker = cardPair.getAttacker();
-        const defender = cardPair.getDefender();
-
-        return CardController.canBeat(defender, attacker);
-    }
-
     static canDefenderUseCard(pair, defenderCard) {
         return CardController.canBeat(defenderCard, pair.getAttacker());
     }

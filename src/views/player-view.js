@@ -72,22 +72,10 @@ class PlayerView {
         takeCardsButton.disabled = false;
     }
 
-    static disableTakeCardsButton(player) {
-        const playerContainer = this.getPlayerContainer(player);
-        const takeCardsButton = playerContainer.querySelector('.player-actions__take-cards-button');
-        takeCardsButton.disabled = true;
-    }
-
     static enableDoneButton(player) {
         const playerContainer = this.getPlayerContainer(player);
         const doneButton = playerContainer.querySelector('.player-actions__done-button');
         doneButton.disabled = false;
-    }
-
-    static disableDoneButton(player) {
-        const playerContainer = this.getPlayerContainer(player);
-        const doneButton = playerContainer.querySelector('.player-actions__done-button');
-        doneButton.disabled = true;
     }
 
     static selectCard(card) {
