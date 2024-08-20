@@ -81,6 +81,12 @@ class PlayerController {
 
             player.clearSelectedCard(player);
             this.renderPlayerCards(player);
+
+            const playerDefender = PlayerController.findDefender();
+            const playerAttacker = PlayerController.findAttacker();
+
+            PlayerController.checkUnbeatenCards(playerDefender);
+            PlayerController.checkAllCardsBeaten(playerAttacker);
         }
     }
 

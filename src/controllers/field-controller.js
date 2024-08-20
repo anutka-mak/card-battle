@@ -16,12 +16,6 @@ class FieldController {
         } else {
             this.addDefenderCard(cardPair, card);
         }
-
-        const playerDefender = PlayerController.findDefender();
-        const playerAttacker = PlayerController.findAttacker();
-
-        PlayerController.checkUnbeatenCards(playerDefender);
-        PlayerController.checkAllCardsBeaten(playerAttacker);
     }
 
     static addAttackerCard(card) {
