@@ -33,6 +33,18 @@ class PlayerController {
         return player.getMode();
     }
 
+    static findDefender() {
+        const defender = 'defender';
+
+        return this.players.find(player => player.getMode() === defender);
+    }
+
+    static findAttacker() {
+        const attacker = 'attacker';
+
+        return this.players.find(player => player.getMode() === attacker);
+    }
+
     static findPlayerByCardId(cardId) {
         return this.players.find(player => player.getCardById(cardId));
     }
@@ -84,6 +96,18 @@ class PlayerController {
         });
 
         PlayerView.renderPlayer(player);
+    }
+
+    static checkUnbeatenCards(player) {
+        if (!FieldController.areAllCardsBeaten()) {
+            PlayerView.enableTakeCardsButton(player);
+        }
+    }
+
+    static checkAllCardsBeaten(player) {
+        if (FieldController.areAllCardsBeaten()) {
+            PlayerView.enableDoneButton(player);
+        }
     }
 }
 

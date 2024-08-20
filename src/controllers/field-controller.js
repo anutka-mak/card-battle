@@ -16,6 +16,12 @@ class FieldController {
         } else {
             this.addDefenderCard(cardPair, card);
         }
+
+        const playerDefender = PlayerController.findDefender();
+        const playerAttacker = PlayerController.findAttacker();
+
+        PlayerController.checkUnbeatenCards(playerDefender);
+        PlayerController.checkAllCardsBeaten(playerAttacker);
     }
 
     static addAttackerCard(card) {
@@ -96,7 +102,7 @@ class FieldController {
     }
 
     static areAllCardsBeaten() {
-        return this.fieldCard.every(pair => pair.isPairComplete() && this.isCanBeat(pair));
+        return this.fieldCard.every(pair => pair.isPairComplete());
     }
 
     static moveCardsToDiscard(pairs) {
@@ -149,7 +155,6 @@ class FieldController {
             this.handlePairClick(player);
         }
     }
-
 }
 
 export default FieldController;
