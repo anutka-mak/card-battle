@@ -101,25 +101,10 @@ class FieldController {
         return this.fieldCard.every(pair => pair.isPairComplete());
     }
 
-    static moveCardsToDiscard(pairs) {
-        const areAllCardsBeaten = this.areAllCardsBeaten();
-
-        if (areAllCardsBeaten) {
-            pairs.forEach(pair => {
-                const attackerCard = pair.getAttacker();
-                const defenderCard = pair.getDefender()
-
-                this.discardPile.push(attackerCard, defenderCard);
-                this.removeCardPair(pair);
-            });
-
-            console.log(this.discardPile);
-            this.renderField();
-        }
-    }
-
-    static removeCardPair(cardPair) {
-        this.fieldCard = this.fieldCard.filter(pair => pair !== cardPair);
+    static moveCardsToDiscard() {
+        const fieldCards = this.getFieldCards();
+        this.discardPile.push(...fieldCards);
+        this.clearField();
     }
 
     static handleFieldClick(player) {

@@ -153,7 +153,7 @@ class PlayerController {
     }
 
     static handleDoneClick(player) {
-
+        FieldController.moveCardsToDiscard();
     }
 }
 
