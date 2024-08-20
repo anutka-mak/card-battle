@@ -1,11 +1,17 @@
 import CardView from "./card-view.js";
 
 class PlayerView {
-    static renderPlayer(player) {
+    static getPlayerContainer(player) {
         const playerName = player.getName();
         const playerNameWithDashes = playerName.replace(/\s+/g, '-');
         const playerClassName = playerNameWithDashes.toLowerCase();
         const playerContainer = document.querySelector(`.${playerClassName}`);
+
+        return playerContainer;
+    }
+
+    static renderPlayer(player) {
+        const playerContainer = this.getPlayerContainer(player);
 
         if (playerContainer) {
             playerContainer.replaceChildren();
@@ -47,10 +53,12 @@ class PlayerView {
         const takeCardsButton = document.createElement('button');
         takeCardsButton.classList.add('player-actions__take-cards-button');
         takeCardsButton.textContent = 'take cards';
+        takeCardsButton.disabled = true;
 
         const doneButton = document.createElement('button');
         doneButton.classList.add('player-actions__done-button');
         doneButton.textContent = 'done';
+        doneButton.disabled = true;
 
         actionsContainer.appendChild(takeCardsButton);
         actionsContainer.appendChild(doneButton);
@@ -58,6 +66,29 @@ class PlayerView {
         container.appendChild(actionsContainer);
     }
 
+    static enableTakeCardsButton(player) {
+        const playerContainer = this.getPlayerContainer(player);
+        const takeCardsButton = playerContainer.querySelector('.player-actions__take-cards-button');
+        takeCardsButton.disabled = false;
+    }
+
+    static disableTakeCardsButton(player) {
+        const playerContainer = this.getPlayerContainer(player);
+        const takeCardsButton = playerContainer.querySelector('.player-actions__take-cards-button');
+        takeCardsButton.disabled = true;
+    }
+
+    static enableDoneButton(player) {
+        const playerContainer = this.getPlayerContainer(player);
+        const doneButton = playerContainer.querySelector('.player-actions__done-button');
+        doneButton.disabled = false;
+    }
+
+    static disableDoneButton(player) {
+        const playerContainer = this.getPlayerContainer(player);
+        const doneButton = playerContainer.querySelector('.player-actions__done-button');
+        doneButton.disabled = true;
+    }
 
     static selectCard(card) {
         this.removeSelectedCard();

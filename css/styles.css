@@ -10,6 +10,7 @@
     --bg-pink-color: #9e4868;
     --bg-blue-color: #8795a5;
     --bg-green-color: #4d7838;
+    --bg-grey-color: grey;
 }
 
 * {
@@ -216,4 +217,8 @@
 
 .player-actions__done-button {
     background-color: var(--bg-green-color);
+}
+
+.player-actions__take-cards-button:disabled, .player-actions__done-button:disabled {
+    background-color: var(--bg-grey-color);
 }
