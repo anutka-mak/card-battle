@@ -5,9 +5,8 @@ class PlayerView {
         const playerName = player.getName();
         const playerNameWithDashes = playerName.replace(/\s+/g, '-');
         const playerClassName = playerNameWithDashes.toLowerCase();
-        const playerContainer = document.querySelector(`.${playerClassName}`);
 
-        return playerContainer;
+        return document.querySelector(`.${playerClassName}`);
     }
 
     static renderPlayer(player) {
@@ -54,11 +53,21 @@ class PlayerView {
         takeCardsButton.classList.add('player-actions__take-cards-button');
         takeCardsButton.textContent = 'take cards';
         takeCardsButton.disabled = true;
+        takeCardsButton.addEventListener('click', (event) => {
+            if (this.takeCardsButtonClickCallback) {
+                this.takeCardsButtonClickCallback();
+            }
+        });
 
         const doneButton = document.createElement('button');
         doneButton.classList.add('player-actions__done-button');
         doneButton.textContent = 'done';
         doneButton.disabled = true;
+        doneButton.addEventListener('click', (event) => {
+            if (this.doneButtonClickCallback) {
+                this.doneButtonClickCallback();
+            }
+        });
 
         actionsContainer.appendChild(takeCardsButton);
         actionsContainer.appendChild(doneButton);
@@ -90,6 +99,14 @@ class PlayerView {
     static removeSelectedCard() {
         const selectedCards = document.querySelectorAll('.selected');
         selectedCards.forEach(card => card.classList.remove('selected'));
+    }
+
+    static onTakeCardsButtonClick(callback) {
+        this.takeCardsButtonClickCallback = callback;
+    }
+
+    static onDoneButtonClick(callback) {
+        this.doneButtonClickCallback = callback;
     }
 }
 

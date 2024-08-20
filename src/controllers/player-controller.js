@@ -115,6 +115,25 @@ class PlayerController {
             PlayerView.enableDoneButton(player);
         }
     }
+
+    static initializePlayerActions(player) {
+        const playerMode = player.getMode();
+        const attacker = 'attacker';
+
+        if (playerMode === attacker) {
+            PlayerView.onDoneButtonClick(() => this.handleDoneClick(player));
+        } else {
+            PlayerView.onTakeCardsButtonClick(() => this.handleTakeCardsClick(player));
+        }
+    }
+
+    static handleTakeCardsClick(player) {
+        console.log(`${player.getName()} взяв карти.`)
+    }
+
+    static handleDoneClick(player) {
+        console.log(`${player.getName()} завершив хід.`);
+    }
 }
 
 export default PlayerController;
