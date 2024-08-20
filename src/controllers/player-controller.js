@@ -127,12 +127,33 @@ class PlayerController {
         }
     }
 
+    static moveFieldCardsToPlayer(player) {
+        const fieldPairs = FieldController.getFieldCards();
+
+        fieldPairs.forEach(pair => {
+            const attackerCard = pair.getAttacker();
+            const defenderCard = pair.getDefender();
+
+            if (attackerCard) {
+                player.addCard(attackerCard);
+            }
+
+            if (defenderCard) {
+                player.addCard(defenderCard);
+            }
+        });
+
+        FieldController.clearField();
+        this.renderPlayerCards(player);
+    }
+
+
     static handleTakeCardsClick(player) {
-        console.log(`${player.getName()} взяв карти.`)
+        this.moveFieldCardsToPlayer(player);
     }
 
     static handleDoneClick(player) {
-        console.log(`${player.getName()} завершив хід.`);
+
     }
 }
 

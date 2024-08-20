@@ -43,6 +43,15 @@ class FieldController {
         return CardController.canBeat(defenderCard, pair.getAttacker());
     }
 
+    static getFieldCards() {
+        return this.fieldCard;
+    }
+
+    static clearField() {
+        this.fieldCard = [];
+        this.renderField();
+    }
+
     static findIncompletePairs() {
         return this.fieldCard.filter(pair => !pair.isPairComplete());
     }
