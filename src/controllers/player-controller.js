@@ -2,7 +2,7 @@ import PlayerModel from "../models/player-model.js";
 import PlayerView from "../views/player-view.js";
 import CardController from "./card-controller.js";
 import FieldController from "./field-controller.js";
-import DeckController from "./deck-controller.js";;
+import DeckController from "./deck-controller.js";
 
 class PlayerController {
     static players = [];
@@ -56,6 +56,10 @@ class PlayerController {
         const MIN_CARDS_COUNT = 6;
         const players =  this.players;
 
+        if (DeckController.getCardsCount() === 0) {
+            return;
+        }
+
         players.forEach(player => {
             const currentCardCount = this.getCardsCount(player);
             const cardsNeeded = MIN_CARDS_COUNT - currentCardCount;
@@ -108,21 +112,21 @@ class PlayerController {
             const canAddCard = FieldController.canAddCard(card, mode);
 
             if (canAddCard) {
+                const playerDefender = PlayerController.findDefender();
+                const playerAttacker = PlayerController.findAttacker();
+
                 FieldController.addCardToField(player, card, cardPair);
                 this.removeCardFromPlayer(player, card.getId());
                 player.clearSelectedCard();
+
+                PlayerController.checkUnbeatenCards(playerDefender);
+                PlayerController.checkAllCardsBeaten(playerAttacker);
             } else {
                 console.log("This card cannot be added to the field.");
             }
 
             player.clearSelectedCard(player);
             this.renderPlayerCards(player);
-
-            const playerDefender = PlayerController.findDefender();
-            const playerAttacker = PlayerController.findAttacker();
-
-            PlayerController.checkUnbeatenCards(playerDefender);
-            PlayerController.checkAllCardsBeaten(playerAttacker);
         }
     }
 
@@ -132,7 +136,6 @@ class PlayerController {
 
     static renderPlayerCards(player) {
         const playerCards = player.getCards();
-        //const mode = player.getMode();
 
         playerCards.forEach(card => {
             CardController.handleCardClick(player, card);
@@ -165,25 +168,18 @@ class PlayerController {
     }
 
     static moveFieldCardsToPlayer(player) {
-        const fieldPairs = FieldController.getFieldCards();
+        const fieldCards = FieldController.getFieldCards();
 
-        fieldPairs.forEach(pair => {
-            const attackerCard = pair.getAttacker();
-            const defenderCard = pair.getDefender();
-
-            if (attackerCard) {
-                player.addCard(attackerCard);
-            }
-
-            if (defenderCard) {
-                player.addCard(defenderCard);
+        fieldCards.forEach(pair => {
+            player.addCard(pair.getAttacker());
+            if (pair.getDefender()) {
+                player.addCard(pair.getDefender());
             }
         });
 
         FieldController.clearField();
         this.renderPlayerCards(player);
     }
-
 
     static handleTakeCardsClick(player) {
         this.moveFieldCardsToPlayer(player);
