@@ -12,6 +12,7 @@ class PlayerController {
         const player = new PlayerModel(name, mode);
         this.players.push(player);
         this.renderPlayerCards(player);
+        this.initializePlayerActions(player);
 
         return player;
     }
@@ -112,21 +113,21 @@ class PlayerController {
             const canAddCard = FieldController.canAddCard(card, mode);
 
             if (canAddCard) {
-                const playerDefender = PlayerController.findDefender();
-                const playerAttacker = PlayerController.findAttacker();
-
                 FieldController.addCardToField(player, card, cardPair);
                 this.removeCardFromPlayer(player, card.getId());
                 player.clearSelectedCard();
-
-                PlayerController.checkUnbeatenCards(playerDefender);
-                PlayerController.checkAllCardsBeaten(playerAttacker);
             } else {
                 console.log("This card cannot be added to the field.");
             }
 
             player.clearSelectedCard(player);
             this.renderPlayerCards(player);
+
+            const playerDefender = PlayerController.findDefender();
+            const playerAttacker = PlayerController.findAttacker();
+
+            PlayerController.checkUnbeatenCards(playerDefender);
+            PlayerController.checkAllCardsBeaten(playerAttacker);
         }
     }
 
@@ -151,7 +152,10 @@ class PlayerController {
     }
 
     static checkAllCardsBeaten(player) {
-        if (FieldController.areAllCardsBeaten()) {
+        const allCardsBeaten = FieldController.areAllCardsBeaten();
+        const isFieldNotEmpty = !FieldController.isFieldEmpty();
+
+        if (allCardsBeaten && isFieldNotEmpty) {
             PlayerView.enableDoneButton(player);
         }
     }
@@ -163,26 +167,29 @@ class PlayerController {
         if (playerMode === attacker) {
             PlayerView.onDoneButtonClick(() => this.handleDoneClick());
         } else {
-            PlayerView.onTakeCardsButtonClick(() => this.handleTakeCardsClick(player));
+            PlayerView.onTakeCardsButtonClick(() => this.handleTakeCardsClick());
         }
     }
 
-    static moveFieldCardsToPlayer(player) {
+    static moveFieldCardsToPlayer() {
         const fieldCards = FieldController.getFieldCards();
+        const defender = PlayerController.findDefender();
 
         fieldCards.forEach(pair => {
-            player.addCard(pair.getAttacker());
-            if (pair.getDefender()) {
-                player.addCard(pair.getDefender());
+            if (defender) {
+                defender.addCard(pair.getAttacker());
+                if (pair.getDefender()) {
+                    defender.addCard(pair.getDefender());
+                }
             }
         });
 
+        this.renderPlayerCards(defender);
         FieldController.clearField();
-        this.renderPlayerCards(player);
     }
 
-    static handleTakeCardsClick(player) {
-        this.moveFieldCardsToPlayer(player);
+    static handleTakeCardsClick() {
+        this.moveFieldCardsToPlayer();
         this.refillCards();
     }
 
