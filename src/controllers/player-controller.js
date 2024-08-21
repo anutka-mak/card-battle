@@ -2,6 +2,7 @@ import PlayerModel from "../models/player-model.js";
 import PlayerView from "../views/player-view.js";
 import CardController from "./card-controller.js";
 import FieldController from "./field-controller.js";
+import DeckController from "./deck-controller.js";
 
 class PlayerController {
     static players = [];
@@ -27,6 +28,23 @@ class PlayerController {
         }
 
         return countAttacker > countDefender ? defender : attacker;
+    }
+
+    static getCardsCount(player) {
+        return player.getCards().length;
+    }
+
+    static refillCards() {
+        const MIN_CARDS_COUNT = 6;
+        const players =  this.players;
+
+        players.forEach(player => {
+            const currentCardCount = this.getCardsCount(player);
+            const cardsNeeded = MIN_CARDS_COUNT - currentCardCount;
+            const takeCards = DeckController.drawCards(cardsNeeded);
+
+            PlayerController.takeCards(player, takeCards);
+        });
     }
 
     static getPlayerMode(player) {
@@ -121,7 +139,7 @@ class PlayerController {
         const attacker = 'attacker';
 
         if (playerMode === attacker) {
-            PlayerView.onDoneButtonClick(() => this.handleDoneClick(player));
+            PlayerView.onDoneButtonClick(() => this.handleDoneClick());
         } else {
             PlayerView.onTakeCardsButtonClick(() => this.handleTakeCardsClick(player));
         }
@@ -150,10 +168,12 @@ class PlayerController {
 
     static handleTakeCardsClick(player) {
         this.moveFieldCardsToPlayer(player);
+        this.refillCards();
     }
 
-    static handleDoneClick(player) {
+    static handleDoneClick() {
         FieldController.moveCardsToDiscard();
+        this.refillCards();
     }
 }
 
