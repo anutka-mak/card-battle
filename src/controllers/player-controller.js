@@ -2,7 +2,7 @@ import PlayerModel from "../models/player-model.js";
 import PlayerView from "../views/player-view.js";
 import CardController from "./card-controller.js";
 import FieldController from "./field-controller.js";
-import DeckController from "./deck-controller.js";
+import DeckController from "./deck-controller.js";;
 
 class PlayerController {
     static players = [];
@@ -28,6 +28,24 @@ class PlayerController {
         }
 
         return countAttacker > countDefender ? defender : attacker;
+    }
+
+    static switchPlayersModes() {
+        this.players.forEach(player => {
+            this.changePlayerMode(player);
+            this.renderPlayerCards(player);
+            FieldController.handlePlayerClick(player);
+        });
+    }
+
+    static changePlayerMode(player) {
+        const currentMode = player.getMode();
+        const attacker = 'attacker';
+        const defender = 'defender';
+        const mode = currentMode === attacker ? defender : attacker;
+
+        player.setMode(mode);
+        this.renderPlayerCards(player);
     }
 
     static getCardsCount(player) {
@@ -114,6 +132,7 @@ class PlayerController {
 
     static renderPlayerCards(player) {
         const playerCards = player.getCards();
+        //const mode = player.getMode();
 
         playerCards.forEach(card => {
             CardController.handleCardClick(player, card);
@@ -174,6 +193,7 @@ class PlayerController {
     static handleDoneClick() {
         FieldController.moveCardsToDiscard();
         this.refillCards();
+        this.switchPlayersModes();
     }
 }
 
