@@ -97,7 +97,7 @@ class FieldController {
         });
     }
 
-    static areAllCardsBeaten() {
+    static checkAllCardsBeaten() {
         return this.fieldCard.every(pair => pair.isPairComplete());
     }
 

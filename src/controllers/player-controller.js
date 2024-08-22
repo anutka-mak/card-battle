@@ -3,6 +3,7 @@ import PlayerView from "../views/player-view.js";
 import CardController from "./card-controller.js";
 import FieldController from "./field-controller.js";
 import DeckController from "./deck-controller.js";
+import ModalController from "./modal-controller.js";
 
 class PlayerController {
     static players = [];
@@ -146,13 +147,13 @@ class PlayerController {
     }
 
     static checkUnbeatenCards(player) {
-        if (!FieldController.areAllCardsBeaten()) {
+        if (!FieldController.checkAllCardsBeaten()) {
             PlayerView.enableTakeCardsButton(player);
         }
     }
 
     static checkAllCardsBeaten(player) {
-        const allCardsBeaten = FieldController.areAllCardsBeaten();
+        const allCardsBeaten = FieldController.checkAllCardsBeaten();
         const isFieldNotEmpty = !FieldController.isFieldEmpty();
 
         if (allCardsBeaten && isFieldNotEmpty) {
@@ -191,12 +192,26 @@ class PlayerController {
     static handleTakeCardsClick() {
         this.moveFieldCardsToPlayer();
         this.refillCards();
+        this.checkForWinner();
     }
 
     static handleDoneClick() {
         FieldController.moveCardsToDiscard();
         this.refillCards();
         this.switchPlayersModes();
+        this.checkForWinner();
+    }
+
+    static checkForWinner() {
+        this.players.forEach(player => {
+            const hasNoCards = PlayerController.getCardsCount(player) === 0;
+            const isDeckEmpty = DeckController.getCardsCount() === 0;
+            const playerName = player.getName();
+
+            if (hasNoCards && isDeckEmpty) {
+                ModalController.showModal(playerName);
+            }
+        });
     }
 }
 
