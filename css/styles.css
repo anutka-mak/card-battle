@@ -6,6 +6,11 @@
     --highlight-bg: rgb(255, 255, 172);
     --text-color: rgb(0, 0, 0);
     --deck-bg: rgba(250, 235, 215, 1);
+    --text-color-white: rgb(255, 255, 255);
+    --bg-pink-color: #9e4868;
+    --bg-blue-color: #8795a5;
+    --bg-green-color: #4d7838;
+    --bg-grey-color: grey;
 }
 
 * {
@@ -29,9 +34,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 30px;
+    gap: 20px;
     width: 85vw;
-    height: 90vh;
+    height: 99vh;
 }
 
 .card-board {
@@ -44,7 +49,7 @@
 
 .deck-count {
     display: flex;
-    padding: 12px 0 12px 0;
+    padding: 10px 0 7px 0;
     width: 180px;
     font-size: 18px;
     font-weight: 500;
@@ -128,7 +133,8 @@
 
 .player-cards {
     display: flex;
-    gap: 7px;
+    flex-wrap: wrap;
+    gap: 5px;
     width: 77%;
 }
 
@@ -145,7 +151,7 @@
     display: flex;
     gap: 25px;
     padding: 20px;
-    height: 370px;
+    height: 60%;
     text-align: center;
     align-items: center;
     width: 62%;
@@ -180,12 +186,40 @@
     font-weight: 500;
     text-align: center;
     color: var(--bg-color);
-    background-color: #8795a5;
-
+    background-color: var(--bg-blue-color);
     border-radius: 8px;
 }
 
 .trump-image {
     width: 21px;
     height: 21px;
+}
+
+.player-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.player-actions__take-cards-button, .player-actions__done-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+    color: var(--text-color-white);
+
+    background-color: var(--bg-pink-color);
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.player-actions__done-button {
+    background-color: var(--bg-green-color);
+}
+
+.player-actions__take-cards-button:disabled, .player-actions__done-button:disabled {
+    background-color: var(--bg-grey-color);
 }

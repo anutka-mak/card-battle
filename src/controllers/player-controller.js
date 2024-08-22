@@ -2,6 +2,7 @@ import PlayerModel from "../models/player-model.js";
 import PlayerView from "../views/player-view.js";
 import CardController from "./card-controller.js";
 import FieldController from "./field-controller.js";
+import DeckController from "./deck-controller.js";
 
 class PlayerController {
     static players = [];
@@ -11,6 +12,7 @@ class PlayerController {
         const player = new PlayerModel(name, mode);
         this.players.push(player);
         this.renderPlayerCards(player);
+        this.initializePlayerActions(player);
 
         return player;
     }
@@ -29,8 +31,59 @@ class PlayerController {
         return countAttacker > countDefender ? defender : attacker;
     }
 
+    static switchPlayersModes() {
+        this.players.forEach(player => {
+            this.changePlayerMode(player);
+            this.renderPlayerCards(player);
+            FieldController.handlePlayerClick(player);
+        });
+    }
+
+    static changePlayerMode(player) {
+        const currentMode = player.getMode();
+        const attacker = 'attacker';
+        const defender = 'defender';
+        const mode = currentMode === attacker ? defender : attacker;
+
+        player.setMode(mode);
+        this.renderPlayerCards(player);
+    }
+
+    static getCardsCount(player) {
+        return player.getCards().length;
+    }
+
+    static refillCards() {
+        const MIN_CARDS_COUNT = 6;
+        const players =  this.players;
+
+        if (DeckController.getCardsCount() === 0) {
+            return;
+        }
+
+        players.forEach(player => {
+            const currentCardCount = this.getCardsCount(player);
+            const cardsNeeded = MIN_CARDS_COUNT - currentCardCount;
+            const takeCards = DeckController.drawCards(cardsNeeded);
+
+            PlayerController.takeCards(player, takeCards);
+        });
+    }
+
     static getPlayerMode(player) {
         return player.getMode();
+    }
+
+    static findDefender() {
+        const defender = 'defender';
+
+        return this.players.find(player => player.getMode() === defender);
+    }
+
+    static findAttacker() {
+        const attacker = 'attacker';
+
+        return this.players.find(player => player.getMode() === attacker);
     }
 
     static findPlayerByCardId(cardId) {
@@ -69,6 +122,12 @@ class PlayerController {
 
             player.clearSelectedCard(player);
             this.renderPlayerCards(player);
+
+            const playerDefender = PlayerController.findDefender();
+            const playerAttacker = PlayerController.findAttacker();
+
+            PlayerController.checkUnbeatenCards(playerDefender);
+            PlayerController.checkAllCardsBeaten(playerAttacker);
         }
     }
 
@@ -84,6 +143,60 @@ class PlayerController {
         });
 
         PlayerView.renderPlayer(player);
+    }
+
+    static checkUnbeatenCards(player) {
+        if (!FieldController.areAllCardsBeaten()) {
+            PlayerView.enableTakeCardsButton(player);
+        }
+    }
+
+    static checkAllCardsBeaten(player) {
+        const allCardsBeaten = FieldController.areAllCardsBeaten();
+        const isFieldNotEmpty = !FieldController.isFieldEmpty();
+
+        if (allCardsBeaten && isFieldNotEmpty) {
+            PlayerView.enableDoneButton(player);
+        }
+    }
+
+    static initializePlayerActions(player) {
+        const playerMode = player.getMode();
+        const attacker = 'attacker';
+
+        if (playerMode === attacker) {
+            PlayerView.onDoneButtonClick(() => this.handleDoneClick());
+        } else {
+            PlayerView.onTakeCardsButtonClick(() => this.handleTakeCardsClick());
+        }
+    }
+
+    static moveFieldCardsToPlayer() {
+        const fieldCards = FieldController.getFieldCards();
+        const defender = PlayerController.findDefender();
+
+        fieldCards.forEach(pair => {
+            if (defender) {
+                defender.addCard(pair.getAttacker());
+                if (pair.getDefender()) {
+                    defender.addCard(pair.getDefender());
+                }
+            }
+        });
+
+        this.renderPlayerCards(defender);
+        FieldController.clearField();
+    }
+
+    static handleTakeCardsClick() {
+        this.moveFieldCardsToPlayer();
+        this.refillCards();
+    }
+
+    static handleDoneClick() {
+        FieldController.moveCardsToDiscard();
+        this.refillCards();
+        this.switchPlayersModes();
     }
 }
 

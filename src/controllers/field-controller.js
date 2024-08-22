@@ -39,15 +39,17 @@ class FieldController {
         }
     }
 
-    static isCanBeat(cardPair) {
-        const attacker = cardPair.getAttacker();
-        const defender = cardPair.getDefender();
-
-        return CardController.canBeat(defender, attacker);
-    }
-
     static canDefenderUseCard(pair, defenderCard) {
         return CardController.canBeat(defenderCard, pair.getAttacker());
+    }
+
+    static getFieldCards() {
+        return this.fieldCard;
+    }
+
+    static clearField() {
+        this.fieldCard = [];
+        this.renderField();
     }
 
     static findIncompletePairs() {
@@ -96,28 +98,13 @@ class FieldController {
     }
 
     static areAllCardsBeaten() {
-        return this.fieldCard.every(pair => pair.isPairComplete() && this.isCanBeat(pair));
+        return this.fieldCard.every(pair => pair.isPairComplete());
     }
 
-    static moveCardsToDiscard(pairs) {
-        const areAllCardsBeaten = this.areAllCardsBeaten();
-
-        if (areAllCardsBeaten) {
-            pairs.forEach(pair => {
-                const attackerCard = pair.getAttacker();
-                const defenderCard = pair.getDefender()
-
-                this.discardPile.push(attackerCard, defenderCard);
-                this.removeCardPair(pair);
-            });
-
-            console.log(this.discardPile);
-            this.renderField();
-        }
-    }
-
-    static removeCardPair(cardPair) {
-        this.fieldCard = this.fieldCard.filter(pair => pair !== cardPair);
+    static moveCardsToDiscard() {
+        const fieldCards = this.getFieldCards();
+        this.discardPile.push(...fieldCards);
+        this.clearField();
     }
 
     static handleFieldClick(player) {
@@ -149,7 +136,6 @@ class FieldController {
             this.handlePairClick(player);
         }
     }
-
 }
 
 export default FieldController;
