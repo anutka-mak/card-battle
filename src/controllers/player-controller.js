@@ -147,13 +147,13 @@ class PlayerController {
     }
 
     static checkUnbeatenCards(player) {
-        if (!FieldController.areAllCardsBeaten()) {
+        if (!FieldController.checkAllCardsBeaten()) {
             PlayerView.enableTakeCardsButton(player);
         }
     }
 
     static checkAllCardsBeaten(player) {
-        const allCardsBeaten = FieldController.areAllCardsBeaten();
+        const allCardsBeaten = FieldController.checkAllCardsBeaten();
         const isFieldNotEmpty = !FieldController.isFieldEmpty();
 
         if (allCardsBeaten && isFieldNotEmpty) {
